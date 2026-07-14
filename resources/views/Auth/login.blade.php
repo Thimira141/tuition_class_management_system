@@ -19,12 +19,12 @@
 
         <!-- Form -->
         <div class="col-md-7">
-            <form action="#" method="post">
+            <form action="{{ route('login') }}" method="post" class="ajax-form">
                 <p class="fs-1 text-center mb-4">User Login</p>
 
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="email-input">@</span>
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email"
+                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email"
                            aria-describedby="email-input">
                 </div>
 
@@ -32,7 +32,7 @@
                     <span class="input-group-text" id="basic-password">
                         <i class="bi bi-key-fill"></i>
                     </span>
-                    <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password"
                            aria-describedby="basic-password">
                 </div>
 

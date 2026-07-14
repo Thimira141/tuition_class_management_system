@@ -53,25 +53,37 @@ async function submitAjaxForm(form) {
         } else {
             response = await axios.get(form.action, { params: Object.fromEntries(formData) });
         }
-        const data = response.data;
 
-        if (response.ok) {
+        const data = response?.data || {};
+        const isSuccess = response && response.status >= 200 && response.status < 300;
+
+        if (isSuccess) {
             showModal('success', data.message || 'Action completed successfully!', data?.error || false);
             if (data.redirect) {
                 setTimeout(() => window.location.href = data.redirect, 1500);
             }
-            // Dispatch custom event so listeners can hook into it
             form.dispatchEvent(new CustomEvent('ajax:success', { detail: data }));
             console.debug('[form-ajax:dispatch] ajax:success dispatched');
         } else {
+            const errorBag = data.errors || data.errorBag || {};
             showModal('danger', data.message || 'Something went wrong.', data?.error || false);
-            if (data.status === 'validateFail') showInvalidateData(form, data.errorBag);
+            if (Object.keys(errorBag).length) {
+                showInvalidateData(form, errorBag);
+            }
             form.dispatchEvent(new CustomEvent('ajax:fails', { detail: data }));
             console.debug('[form-ajax:dispatch] ajax:fails dispatched');
         }
     } catch (error) {
-        showModal('danger', 'Network error: ' + error.message);
-        form.dispatchEvent(new CustomEvent('ajax:error'));
+        const responseData = error?.response?.data || {};
+        const errorBag = responseData.errors || responseData.errorBag || {};
+        const message = responseData.message || error?.message || 'Something went wrong.';
+
+        showModal('danger', message, responseData?.error || false);
+        if (Object.keys(errorBag).length) {
+            showInvalidateData(form, errorBag);
+        }
+
+        form.dispatchEvent(new CustomEvent('ajax:error', { detail: responseData }));
         console.debug('[form-ajax:dispatch] ajax:error dispatched');
     } finally {
         if (loader) loader.classList.add('d-none');
