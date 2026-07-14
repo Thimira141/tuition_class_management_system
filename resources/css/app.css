@@ -1,3 +1,44 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+@import "tom-select/dist/css/tom-select.bootstrap5.css";
+
+/* tom-select override */
+.ts-wrapper {
+    --ts-bg: var(--bs-body-bg);
+    --ts-color: var(--bs-body-color);
+    --ts-border: var(--bs-border-color);
+    --ts-hover-bg: var(--bs-secondary-bg);
+    --ts-active-bg: var(--bs-primary-bg);
+    --ts-active-color: var(--bs-primary-text);
+}
+
+.ts-control {
+    background-color: var(--ts-bg);
+    color: var(--ts-color);
+    border-color: var(--ts-border);
+}
+
+.ts-control input {
+    color: rgba(var(--bs-body-color-rgb),var(--bs-text-opacity))!important;
+}
+.ts-dropdown {
+    background-color: var(--ts-bg);
+    color: var(--ts-color);
+    border-color: var(--ts-border);
+}
+
+.ts-dropdown .option {
+    color: var(--ts-color);
+}
+
+.ts-dropdown .active {
+    background-color: var(--ts-active-bg);
+    color: var(--ts-active-color);
+}
+
+/* cover image action buttons visibility control */
+.cover-image-action-btn-hover-cover:hover .cover-image-action-btn {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
 
