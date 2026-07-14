@@ -6,37 +6,7 @@
 @section('content')
 
     {{-- nav bar --}}
-    <nav class="navbar navbar-expand-sm shadow px-3 position-sticky top-0 z-1" style="backdrop-filter: blur(5px);">
-        {{-- logo --}}
-        <a class="navbar-brand" href="#">
-            <i class="bi bi-mortarboard-fill text-black bg-warning py-1 px-2 rounded"></i>
-        </a>
-        {{-- collapse button --}}
-        <button class="navbar-toggler d-lg-none border-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <i class="bi bi-list"></i>
-        </button>
-        {{-- nav-menu --}}
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-            {{-- nav-menu left --}}
-            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#" aria-current="page">Home <span
-                            class="visually-hidden">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#announcements">Announcements</a>
-                </li>
-            </ul>
-            {{-- nav-menu right --}}
-            <div class="d-flex my-2 my-lg-0">
-                <button class="btn btn-secondary my-2 my-sm-0">
-                    Login
-                </button>
-            </div>
-        </div>
-    </nav>
+    @include('components.nav-bar.guest')
 
     <div class="container-fluid">
         {{-- hero section --}}
@@ -52,12 +22,12 @@
                 </div>
 
                 <div class="mt-5">
-                    <button class="btn btn-lg btn-primary rounded-pill m-1">
+                    <a class="btn btn-lg btn-primary rounded-pill m-1" href="{{ route('login-page') }}">
                         Login as Student / Parent <i class="bi bi-arrow-right-short ms-1"></i>
-                    </button>
-                    <button class="btn btn-lg btn-primary rounded-pill m-1">
+                    </a>
+                    <a class="btn btn-lg btn-primary rounded-pill m-1" href="{{ route('login-page') }}">
                         Login as Admin <i class="bi bi-arrow-right-short ms-1"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>
