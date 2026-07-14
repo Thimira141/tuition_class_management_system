@@ -17,6 +17,8 @@
     @include('components.loader')
 
     <x-theme-toggle />
+    <x-confirm-model />
+    <x-feedback-model />
 
 
     @yield('content')
