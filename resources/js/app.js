@@ -3,6 +3,12 @@ import './bootstrap';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 
+// import and setup utilities
+import * as utility from './utility';
+window.utility = utility;
+// activate logout form function
+utility.submitLogoutForm()
+
 // import and setup theme toggle button
 import initThemeToggle from './theme';
 initThemeToggle();

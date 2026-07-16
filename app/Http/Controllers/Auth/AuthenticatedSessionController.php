@@ -24,7 +24,8 @@ class AuthenticatedSessionController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Login successful!',
-                'redirect' => route('dashboard'),
+                // todo find which area user has access then redirect to the right admin dashboard
+                'redirect' => route('admin-dashboard'),
             ], 200);
         }
 
