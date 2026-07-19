@@ -42,3 +42,8 @@
   transition: opacity 0.3s ease;
 }
 
+/* applying custom fixed to model body so it doesn't shirk/expand it height */
+.model-fixed-height {
+    overflow-y: auto;
+    height: calc(90vh - 120px) !important;
+}

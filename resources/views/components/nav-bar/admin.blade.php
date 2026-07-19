@@ -16,7 +16,7 @@
             <ul class="navbar-nav nav-pills me-auto mt-2 mt-lg-0 gap-1">
                 <li class="nav-item">
                     <a class="nav-link btn border {{ request()->routeIs('admin-dashboard') ? 'active' : null }}"
-                        href="{{ route('admin-dashboard') }}" aria-current="page">Dashboard
+                        href="{{ route('admin-dashboard') }}">Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
@@ -25,7 +25,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn border" href="#announcements">
+                    <a class="nav-link btn border {{ request()->routeIs('admin-students') ? 'active' : null }}"
+                        href="{{ route('admin-students') }}">
                         <i class="bi bi-people-fill me-1"></i>Students
                     </a>
                 </li>
@@ -66,7 +67,9 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <button class="dropdown-item text-danger-emphasis" id="log-out-form-button">Logout</button>
+                            <button class="dropdown-item text-danger-emphasis" id="log-out-form-button">
+                                <i class="bi bi-box-arrow-right me-1"></i>Logout
+                            </button>
                         </li>
                     </ul>
                 </div>

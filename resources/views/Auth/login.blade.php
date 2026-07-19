@@ -25,7 +25,7 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="email-input">@</span>
                     <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email"
-                           aria-describedby="email-input">
+                           aria-describedby="email-input" value="admin-user@sample.com">
                 </div>
 
                 <div class="input-group mb-3">
@@ -33,7 +33,7 @@
                         <i class="bi bi-key-fill"></i>
                     </span>
                     <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password"
-                           aria-describedby="basic-password">
+                           aria-describedby="basic-password" value="password-1234567890">
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Login</button>
