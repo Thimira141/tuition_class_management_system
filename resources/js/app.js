@@ -14,8 +14,8 @@ import initThemeToggle from './theme';
 initThemeToggle();
 
 // import and setup custom message modals
-import { showModal, showConfirmModal } from './message_models';
-window.showModal = showModal;
+import { showToast, showConfirmModal } from './message_models';
+window.showToast = showToast;
 window.showConfirmModal = showConfirmModal;
 
 // setup ajax forms init

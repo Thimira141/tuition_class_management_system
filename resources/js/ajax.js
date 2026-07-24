@@ -1,5 +1,5 @@
 import axios from "axios";
-import { showModal, showConfirmModal } from "./message_models";
+import { showToast, showConfirmModal } from "./message_models";
 
 export default function initAjaxForms() {
     document.addEventListener('DOMContentLoaded', () => {
@@ -58,7 +58,7 @@ async function submitAjaxForm(form) {
         const isSuccess = response && response.status >= 200 && response.status < 300;
 
         if (isSuccess) {
-            showModal('success', data.message || 'Action completed successfully!', data?.error || false);
+            showToast('success', data.message || 'Action completed successfully!', data?.error || false);
             if (data.redirect) {
                 setTimeout(() => window.location.href = data.redirect, 1500);
             }
@@ -66,7 +66,7 @@ async function submitAjaxForm(form) {
             console.debug('[form-ajax:dispatch] ajax:success dispatched');
         } else {
             const errorBag = data.errors || data.errorBag || {};
-            showModal('danger', data.message || 'Something went wrong.', data?.error || false);
+            showToast('danger', data.message || 'Something went wrong.', data?.error || false);
             if (Object.keys(errorBag).length) {
                 showInvalidateData(form, errorBag);
             }
@@ -78,7 +78,7 @@ async function submitAjaxForm(form) {
         const errorBag = responseData.errors || responseData.errorBag || {};
         const message = responseData.message || error?.message || 'Something went wrong.';
 
-        showModal('danger', message, responseData?.error || false);
+        showToast('danger', message, responseData?.error || false);
         if (Object.keys(errorBag).length) {
             showInvalidateData(form, errorBag);
         }

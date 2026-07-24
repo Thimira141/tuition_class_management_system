@@ -1,4 +1,5 @@
 import { Modal, Toast } from 'bootstrap';
+import { cleanupModalBackdrop, createBootstrapModal } from "./utility";
 
 export function showToast(type, message, alert = false, alertType = 'danger') {
     const toastEl = document.getElementById('app-toast');
@@ -28,7 +29,7 @@ export function showConfirmModal(message, onConfirm) {
     modalBody.textContent = message;
 
     const modalElement = document.getElementById('confirmModal');
-    const confirmModal = new Modal(modalElement);
+    const confirmModal = createBootstrapModal(modalElement);
 
     const proceedBtn = document.getElementById('confirmModalProceed');
     const handler = () => {
@@ -37,5 +38,6 @@ export function showConfirmModal(message, onConfirm) {
     };
     proceedBtn.addEventListener('click', handler, { once: true });
 
+    cleanupModalBackdrop();
     confirmModal.show();
 }

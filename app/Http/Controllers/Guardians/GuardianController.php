@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Students;
+namespace App\Http\Controllers\Guardians;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -76,15 +76,14 @@ class GuardianController extends Controller
                     'status' => 'error',
                     'message' => 'File upload failed.',
                     'error' => $e->getMessage()
-                ], 500);
+                ], 200);
             }
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'guardian' => $guardian->toArray(),
-            // 'redirect' => route('guardians-view-guardian', (string) $guardian->guardian_code) // todo update the route
+            'guardian' => collect($guardian->toArray())->mapWithKeys(fn ($value, $key) => ["guardian__{$key}" => $value]), // add guardian__ prefix
         ], 200);
     }
 
@@ -148,7 +147,7 @@ class GuardianController extends Controller
                 'min:10',
                 'max:15',
                 'string',
-                'regex:/^\+[0-9]+$/',
+                'regex:/^(\+?[0-9]+|0[0-9]+)$/',
                 $id !== false
                 ? Rule::unique('guardians', 'tel')->ignore($id, 'id') // update mode
                 : Rule::unique('guardians', 'tel'), // create mode

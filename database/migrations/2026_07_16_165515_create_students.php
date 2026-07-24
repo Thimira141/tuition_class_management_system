@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('guardians', function (Blueprint $table) {
             $table->id();
-            $table->string('guardian_code')->unique();
+            $table->string('guardian_code')->unique()->nullable();
             $table->string('cover_img', 256)->nullable();
             $table->string('name', 256);
             $table->string('nic', 100)->unique();
@@ -22,11 +22,12 @@ return new class extends Migration {
             $table->string('remarks', 256)->nullable();
             $table->boolean('is_deleted')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('student_code')->unique();
+            $table->string('student_code')->unique()->nullable();
             $table->string('cover_img', 256)->nullable();
             $table->string('name', 256);
             $table->string('nic', 100)->nullable()->unique();
@@ -43,6 +44,7 @@ return new class extends Migration {
             $table->foreign('guardian_id')->references('id')->on('guardians')->onDelete('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

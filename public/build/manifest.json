@@ -1,4 +1,8 @@
 {
+  "_ajax-C-hMhR-v.js": {
+    "file": "assets/ajax-C-hMhR-v.js",
+    "name": "ajax"
+  },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
     "file": "assets/bootstrap-icons-BeopsB42.woff",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
@@ -8,14 +12,34 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-tIszqslv.css",
+    "file": "assets/app-YeTyL7pO.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
     "src": "resources/css/app.css",
-    "isEntry": true
+    "isEntry": true,
+    "assets": [
+      "assets/bootstrap-icons-mSm7cUeB.woff2",
+      "assets/bootstrap-icons-BeopsB42.woff"
+    ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-D2dqPBxv.js",
+    "file": "assets/app-DjJdqvJr.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_ajax-C-hMhR-v.js"
+    ]
+  },
+  "resources/js/students.js": {
+    "file": "assets/students-BiUN7qKn.js",
+    "name": "students",
+    "src": "resources/js/students.js",
+    "isEntry": true,
+    "imports": [
+      "_ajax-C-hMhR-v.js"
+    ]
   }
 }

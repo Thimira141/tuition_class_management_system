@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\Guardian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -78,15 +79,14 @@ class StudentController extends Controller
                     'status' => 'error',
                     'message' => 'File upload failed.',
                     'error' => $e->getMessage()
-                ], 500);
+                ], 200);
             }
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'student' => $student->toArray(),
-            // 'redirect' => route('students-view-student', (string) $student->student_code) // fix the route
+            'student' => collect($student->toArray())->mapWithKeys(fn ($value, $key) => ["student__{$key}" => $value]), //  add student__ prefix
         ], 200);
 
     }
@@ -201,6 +201,28 @@ class StudentController extends Controller
     }
 
     /**
+     * return json response for tom-select guardians search
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function AJAX_GUARDIANS_INDEX_TS(Request $request)
+    {
+        $query = Guardian::query();
+
+        if ($search = $request->input('q', '')) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('nic', 'like', "%{$search}%");
+        }
+
+        // todo: add a prefix 'guardian__'
+        $guardians = $query->limit(10)->get(['id', 'guardian_code', 'name', 'nic']);
+
+        return response()->json($guardians);
+    }
+
+
+    /**
      * validate form data using given rules
      * @param Request $request
      * @param int|string|bool $id <table> PK
@@ -253,7 +275,7 @@ class StudentController extends Controller
                 'min:10',
                 'max:15',
                 'string',
-                'regex:/^\+[0-9]+$/',
+                'regex:/^(\+?[0-9]+|0[0-9]+)$/',
                 $id !== false
                 ? Rule::unique('students', 'tel')->ignore($id, 'id') // update mode
                 : Rule::unique('students', 'tel'), // create mode
