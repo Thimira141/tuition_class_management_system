@@ -1,26 +1,26 @@
-import { Modal } from 'bootstrap';
+import { Modal, Toast } from 'bootstrap';
 
-export function showModal(type, message, alert = false, alertType = 'danger') {
-    const modalBody = document.getElementById('feedbackModalBody');
-    const modalTitle = document.getElementById('feedbackModalLabel');
-    const modalMessage = modalBody.querySelector('p#message');
-    const modalAlertContent = modalBody.querySelector('p#alertContent');
+export function showToast(type, message, alert = false, alertType = 'danger') {
+    const toastEl = document.getElementById('app-toast');
+    const toastBody = toastEl.querySelector('.toast-body');
 
-    modalTitle.textContent = type === 'success' ? 'Success' : 'Error';
-    modalTitle.className = 'modal-title text-' + type;
+    // Update classes
+    toastEl.className = `toast align-items-center text-bg-${type} border-0`;
 
-    modalMessage.textContent = message;
-    modalMessage.className = 'modal-body text-' + type;
+    // Main message
+    toastBody.textContent = message;
 
+    // Optional alert content (append below message)
     if (alert) {
-        modalAlertContent.textContent = alert;
-        modalAlertContent.className = 'alert alert-' + alertType;
-    } else {
-        modalAlertContent.className = 'd-none';
+        const alertEl = document.createElement('div');
+        alertEl.className = `alert alert-${alertType} mt-2 mb-0 p-2`;
+        alertEl.textContent = alert;
+        toastBody.appendChild(alertEl);
     }
 
-    const feedbackModal = new Modal(document.getElementById('feedbackModal'));
-    feedbackModal.show();
+    // Show toast
+    const toast = new Toast(toastEl);
+    toast.show();
 }
 
 export function showConfirmModal(message, onConfirm) {
