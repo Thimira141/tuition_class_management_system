@@ -40,16 +40,28 @@ async function submitAjaxForm(form) {
     if (loader) loader.classList.remove('d-none');
 
     const formData = new FormData(form);
-    const method = form.method.toLowerCase();
+    const method = (form.getAttribute('data-method') || form.getAttribute('method') || form.method || 'get').toLowerCase();
+
+    if (method === 'put' || method === 'patch' || method === 'delete') {
+        formData.append('_method', method);
+    }
 
     try {
         let response;
         if (method === 'post') {
             response = await axios.post(form.action, formData);
         } else if (method === 'put') {
-            response = await axios.put(form.action, formData);
+            response = await axios.post(form.action, formData, {
+                headers: { 'X-HTTP-Method-Override': 'PUT' }
+            });
+        } else if (method === 'patch') {
+            response = await axios.post(form.action, formData, {
+                headers: { 'X-HTTP-Method-Override': 'PATCH' }
+            });
         } else if (method === 'delete') {
-            response = await axios.delete(form.action, { data: formData });
+            response = await axios.post(form.action, formData, {
+                headers: { 'X-HTTP-Method-Override': 'DELETE' }
+            });
         } else {
             response = await axios.get(form.action, { params: Object.fromEntries(formData) });
         }
