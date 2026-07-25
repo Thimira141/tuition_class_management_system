@@ -21,7 +21,6 @@ class Student extends Model
         'tel',
         'address',
         'remarks',
-        'is_deleted',
         'guardian_id',
     ];
 
