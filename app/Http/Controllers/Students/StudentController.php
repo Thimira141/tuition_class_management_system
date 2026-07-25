@@ -117,7 +117,7 @@ class StudentController extends Controller
         $validated = $validate->validated();
         try {
             // Update scalar fields
-            $student->fill(StripsPrefixes::stripPrefix($validated, 'student__'));
+            $student->fill(StripsPrefixes::stripPrefix(collect($validated)->except('student__cover_img')->toArray(), 'student__'));
             // Handle cover image replacement
             if (!empty($validated['student__cover_img'])) {
                 try {
@@ -131,11 +131,14 @@ class StudentController extends Controller
 
                     $student->cover_img = $path;
                 } catch (\Exception $e) {
+                    // Save scalar fields
+                    $student->save();
+                    // return error
                     return response()->json([
                         'status' => 'error',
                         'message' => 'File upload failed.',
                         'error' => $e->getMessage()
-                    ], 500);
+                    ], 200);
                 }
             }
             // save model

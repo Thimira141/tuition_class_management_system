@@ -128,11 +128,14 @@ class GuardianController extends Controller
 
                     $guardian->cover_img = $path;
                 } catch (\Exception $e) {
+                    // Save scalar fields
+                    $guardian->save();
+                    // return error!
                     return response()->json([
                         'status' => 'error',
                         'message' => 'File upload failed.',
                         'error' => $e->getMessage()
-                    ], 500);
+                    ], 200);
                 }
             }
             // save model
