@@ -85,7 +85,7 @@ class GuardianController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]), // add guardian__ prefix
+            'data' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]), // add guardian__ prefix
         ], 200);
     }
 

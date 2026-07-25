@@ -87,7 +87,7 @@ class StudentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'student' => collect($student->toArray())->mapWithKeys(fn ($value, $key) => ["student__{$key}" => $value]), //  add student__ prefix
+            'data' => collect($student->toArray())->mapWithKeys(fn ($value, $key) => ["student__{$key}" => $value]), //  add student__ prefix
         ], 200);
 
     }
