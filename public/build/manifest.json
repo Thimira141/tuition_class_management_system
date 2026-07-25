@@ -1,6 +1,6 @@
 {
-  "_ajax-C-hMhR-v.js": {
-    "file": "assets/ajax-C-hMhR-v.js",
+  "_ajax-DAq1hjKt.js": {
+    "file": "assets/ajax-DAq1hjKt.js",
     "name": "ajax"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
@@ -25,21 +25,21 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-DjJdqvJr.js",
+    "file": "assets/app-DINUej-O.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_ajax-C-hMhR-v.js"
+      "_ajax-DAq1hjKt.js"
     ]
   },
   "resources/js/students.js": {
-    "file": "assets/students-BiUN7qKn.js",
+    "file": "assets/students-BcWHn-7i.js",
     "name": "students",
     "src": "resources/js/students.js",
     "isEntry": true,
     "imports": [
-      "_ajax-C-hMhR-v.js"
+      "_ajax-DAq1hjKt.js"
     ]
   }
 }
