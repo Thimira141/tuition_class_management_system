@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Traits\StripsPrefixes;
 
 class StudentController extends Controller
 {
@@ -116,9 +117,7 @@ class StudentController extends Controller
         $validated = $validate->validated();
         try {
             // Update scalar fields
-            $student->fill(
-                collect($validated)->except('student__cover_img')->toArray()
-            );
+            $student->fill(StripsPrefixes::stripPrefix($validated, 'student__'));
             // Handle cover image replacement
             if (!empty($validated['student__cover_img'])) {
                 try {
