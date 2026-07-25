@@ -153,14 +153,50 @@ class GuardianController extends Controller
         }
     }
 
-    // destroy() → delete guardian.
-    public function destroy()
+  /**
+     * destroy() → soft delete guardian.
+     * @param string $guardian_code
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function destroy(string $guardian_code)
     {
+        try {
+            // find model for guardians.guardian_code
+            $guardian = Guardian::withTrashed()->where('guardian_code', $guardian_code)->firstOrFail();
+            if ($guardian->trashed()) {
+                // restore if already soft deleted
+                $guardian->restore();
+                $message = 'Guardian restored successfully!';
+            } else {
+                // soft delete if active
+                $guardian->delete();
+                $message = 'Guardian deleted successfully!';
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An unexpected error occurred.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     // show() → retrieve single guardian record.
-    public function show()
+    public function show(string $guardian_code)
     {
+        // get guardian from model
+        $guardian = Guardian::where('guardian_code', $guardian_code)->firstOrFail();
+        // todo compute other related info
+        return response()->json([
+            'status' => 'success',
+            'data' => ['guardian' => $guardian]
+        ]);
     }
 
     /**
