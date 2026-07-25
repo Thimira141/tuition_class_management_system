@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Guardian;
+use App\Traits\StripsPrefixes;
+use Illuminate\Support\Facades\Storage;
 
 class GuardianController extends Controller
 {
@@ -83,13 +85,69 @@ class GuardianController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'guardian' => collect($guardian->toArray())->mapWithKeys(fn ($value, $key) => ["guardian__{$key}" => $value]), // add guardian__ prefix
+            'guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]), // add guardian__ prefix
         ], 200);
     }
 
-    // update() → update guardian.
-    public function update()
+    /**
+     * update() → update guardian.
+     * @param Request $request
+     * @param int|string $guardian_code
+     * @return \Illuminate\Http\JsonResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function update(Request $request, int|string $guardian_code)
     {
+        // get guardian from model
+        $guardian = Guardian::where('guardian_code', $guardian_code)->firstOrFail();
+        // validate data
+        $validate = $this->ValidateData($request, $guardian->id);
+        // handle validate error
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'validateFail',
+                'message' => 'Data Validate Failed!',
+                'errorBag' => $validate->errors()
+            ], 422);
+        }
+        // get validated data
+        $validated = $validate->validated();
+        try {
+            // Update scalar fields
+            $guardian->fill(StripsPrefixes::stripPrefix(collect($validated)->except('guardian__cover_img')->toArray(), 'guardian__'));
+            // Handle cover image replacement
+            if (!empty($validated['guardian__cover_img'])) {
+                try {
+                    if ($guardian->cover_img && Storage::disk('public')->exists($guardian->cover_img)) {
+                        Storage::disk('public')->delete($guardian->cover_img);
+                    }
+
+                    $extension = $validated['guardian__cover_img']->getClientOriginalExtension();
+                    $path = $validated['guardian__cover_img']
+                        ->storeAs('guardians', $guardian->guardian_id . '.' . $extension, 'public');
+
+                    $guardian->cover_img = $path;
+                } catch (\Exception $e) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'File upload failed.',
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
+            }
+            // save model
+            $guardian->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Update Success!',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data update failed!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     // destroy() → delete guardian.
