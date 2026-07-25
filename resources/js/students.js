@@ -1,6 +1,7 @@
 import TomSelect from "tom-select";
 import { clearFormErrors } from "./ajax";
 import { load_data, setFieldValue, cleanupModalBackdrop, createBootstrapModal } from "./utility";
+import { formEventsTracker as guardian_formEventsTracker, triggerNewGuardianModal} from "./guardians";
 
 // identifiers for NEW STUDENT modal
 const STUDENT_NEW_MODAL = '#new-student-model';
@@ -9,8 +10,8 @@ const STUDENT_NEW_MODAL_FORM = '#new-edit-student-form';
 const STUDENT_NEW_MODAL_GUARDIAN_SELECT = '#new-student-model #student__guardian_id';
 
 // NEW GUARDIAN modal
-const GUARDIAN_NEW_MODAL = '#add_new_guardian_model_open_btn';
-const GUARDIAN_NEW_MODAL_TRIGGER = '#new-student-add-model-init-btn';
+const GUARDIAN_NEW_MODAL = '#new-guardian-model';
+const GUARDIAN_NEW_MODAL_TRIGGER = '#new-guardian-add-model-init-btn';
 const GUARDIAN_NEW_MODAL_FORM = '#new-edit-guardian-form';
 
 // variables
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const studentGuardianSelect = initStudentGuardianSelect();
     // init new,edit model actions
     triggerNewStudentModal();
+    triggerNewGuardianModal(); // for guardian modal
 
     formEventsTracker(studentGuardianSelect);
 
@@ -34,23 +36,28 @@ document.addEventListener('DOMContentLoaded', () => {
 function formEventsTracker(studentGuardianSelect) {
     const studentForm = document.querySelector(STUDENT_NEW_MODAL_FORM);
     const guardianForm = document.querySelector(GUARDIAN_NEW_MODAL_FORM);
-    if (!studentForm || guardianForm) {
+    if (!studentForm || !guardianForm) {
         console.error('Forms not found to listen');
         return;
     }
 
-    studentForm.addEventListener('ajax:success', (e, response) => {
-        // fix: this function execution is incomplete student code not found, check response with network monitor
-        studentForm.mode = 'put';
-        studentForm.action = ROUTES.students_update.replace(':student_code', response.data.student_code);
+    guardian_formEventsTracker({
+        onGuardianCreated: (guardianId) => {
+            if (guardianId && studentGuardianSelect) {
+                studentGuardianSelect.setValue(guardianId);
+            }
+        }
     });
-    // guardian modal form handle
-    // note thinking about pull the function from guardians.js to handle form with modal
-    guardianForm.addEventListener('ajax:success', (e, response) => {
-        // todo pull back to student modal, set value for student__guardian_id
-        // studentGuardianSelect.value();
-        console.log(response)
 
+    // change form action, method
+    studentForm.addEventListener('ajax:success', (event) => {
+        const responseData = event.detail || {};
+        const studentCode = responseData?.data?.student__student_code || responseData?.student__student_code || null;
+
+        if (studentCode && studentForm.method !== 'put') {
+            studentForm.method = 'put';
+            studentForm.action = ROUTES.students_update.replace(':student_code', studentCode);
+        }
     });
 }
 
@@ -80,7 +87,7 @@ function initStudentGuardianSelect() {
         create: false,
         valueField: "id",
         labelField: "name",
-        searchField: "name",
+        searchField: "name", // todo display <name>-<nic>
         load: function (query, callback) {
             fetch(ROUTES.guardians_ts + "?q=" + encodeURIComponent(query))
                 .then(response => response.json())
