@@ -79,7 +79,7 @@
                                         <x-partials.form-input label="Guardian" name="student__guardian_id" placeholder="Select Guardian" required="true" type="select" classList="form-select" />
                                     </div>
                                     <div class="col-md-2 col-sm-12 d-flex justify-content-center align-items-center">
-                                        <button type="button" class="btn btn-primary btn-lg" id="add_new_guardian_model_open_btn" data-bs-toggle="modal" data-bs-target="#new-guardian-model">
+                                        <button type="button" class="btn btn-primary btn-lg" id="new-guardian-add-model-init-btn" data-bs-toggle="modal" data-bs-target="#new-guardian-model">
                                             Add New Guardian
                                         </button>
                                     </div>
