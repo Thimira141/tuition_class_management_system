@@ -38,6 +38,9 @@
         'students_update': "{{ route('students.ajax.update', ':student_code') }}",
         'students_show': "{{ route('students.ajax.show', ':student_code') }}",
         'students_destroy': "{{ route('students.ajax.destroy', ':student_code') }}",
+        'guardians_store': "{{ route('guardians.ajax.store') }}",
+        'guardians_update': "{{ route('guardians.ajax.update', ':guardian_code') }}",
+        'guardians_show': "{{ route('guardians.ajax.show', ':guardian_code') }}",
     }
 </script>
 
