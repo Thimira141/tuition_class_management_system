@@ -27,10 +27,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::prefix('guardians')->group(function () {
         // index route
         Route::prefix('ajax')->group(function () {
-            // Route::get('/show/{guardian_code}', [GuardianController::class, 'show'])->name('guardians.ajax.show');
+            Route::get('/show/{guardian_code}', [GuardianController::class, 'show'])->name('guardians.ajax.show');
             Route::post('/store', [GuardianController::class, 'store'])->name('guardians.ajax.store');
-            // Route::put('/update/{guardian_code}', [GuardianController::class, 'update'])->name('guardians.ajax.update');
-            // Route::delete('/destroy/{guardian_code}', [GuardianController::class, 'destroy'])->name('guardians.ajax.destroy');
+            Route::put('/update/{guardian_code}', [GuardianController::class, 'update'])->name('guardians.ajax.update');
+            Route::delete('/destroy/{guardian_code}', [GuardianController::class, 'destroy'])->name('guardians.ajax.destroy');
         });
     });
 });
