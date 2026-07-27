@@ -16,6 +16,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::prefix('students')->group(function () {
         Route::get('/', fn () => view('admin.students.index'))->name('admin-students');
         Route::prefix('ajax')->group(function() {
+            Route::get('/dt-index', [StudentController::class, 'index'])->name('students.ajax.dt.index');
             Route::get('/show/{student_code}', [StudentController::class, 'show'])->name('students.ajax.show');
             Route::post('/store', [StudentController::class, 'store'])->name('students.ajax.store');
             Route::put('/update/{student_code}', [StudentController::class, 'update'])->name('students.ajax.update');
