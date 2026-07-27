@@ -1,6 +1,6 @@
 {
-  "_utility-Dbj2x4RB.js": {
-    "file": "assets/utility-Dbj2x4RB.js",
+  "_utility-DX6SzWmP.js": {
+    "file": "assets/utility-DX6SzWmP.js",
     "name": "utility"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
@@ -34,21 +34,21 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-8qH1crl6.js",
+    "file": "assets/app-5KyNLz5l.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_utility-Dbj2x4RB.js"
+      "_utility-DX6SzWmP.js"
     ]
   },
   "resources/js/students.js": {
-    "file": "assets/students-DcTtFORv.js",
+    "file": "assets/students-BqqAu1O1.js",
     "name": "students",
     "src": "resources/js/students.js",
     "isEntry": true,
     "imports": [
-      "_utility-Dbj2x4RB.js"
+      "_utility-DX6SzWmP.js"
     ]
   }
 }
