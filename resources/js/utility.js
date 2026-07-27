@@ -144,44 +144,6 @@ export function setFieldValue(field, value, ts_map_key='id') {
 }
 
 /**
- * Handle DataTable record deletion via form dispatch.
- *
- * @param {DataTable} dt - DataTable instance
- * @param {HTMLButtonElement} deleteBtn - Button triggering delete
- * @returns {null|void}
- */
-export function handleDTDeleteRecord(dt, deleteBtn) {
-    // get delete form
-    const deleteForm = document.querySelector(deleteBtn.getAttribute('data-target-delete-form')) || false;
-    if (!deleteForm) {
-        console.error('Delete From Not Found!');
-        return null;
-    }
-    // set delete form action
-    deleteForm.setAttribute('action', deleteBtn.getAttribute('data-delete-form-action'));
-    // set table selector value
-    const deleteFromTBS = deleteForm.querySelector('input#table-selector') || false;
-    if (deleteFromTBS) deleteFromTBS.value = deleteBtn.getAttribute('data-table-selector');
-    // set confirm message
-    const deleteFormConfirmMsg = deleteBtn.getAttribute('data-delete-form-confirm-msg');
-    if (deleteFormConfirmMsg) {
-        deleteForm.setAttribute('data-confirm-message', deleteFormConfirmMsg);
-        deleteForm.setAttribute('data-confirm', 'true');
-    } else {
-        deleteForm.setAttribute('data-confirm', 'false');
-    }
-    // submit form
-    deleteForm.dispatchEvent(new Event('submit', { bubbles: true }));
-    // form event -> ajax:success then reload dt; don't repeat the event
-    if (!deleteForm._ajaxBound) {
-        deleteForm.addEventListener('ajax:success', () => {
-            dt.ajax.reload();
-        });
-        deleteForm._ajaxBound = true; // mark as event bound
-    }
-}
-
-/**
  * bootstrap modal backdrop cleanup
  */
 export function cleanupModalBackdrop() {
@@ -205,4 +167,110 @@ export function createBootstrapModal(modalElement) {
     }, { once: true });
 
     return modal;
+}
+
+
+// studentActions.js
+
+// Tracks whether the table is showing active or deleted records
+export let dt_show_deleted_records = 'active'; // deleted | active | all
+
+/** DataTable-Utility
+ * Set the current deleted/active state and refresh the table.
+ * Also updates the Delete/Restore button and highlights the correct view button.
+ * @param {string} state - 'active' or 'deleted'
+ * @param {object} table - DataTable instance
+ */
+export function DT_setDeletedState(state, table) {
+    dt_show_deleted_records = state;
+    table.ajax.reload();
+    DT_updateDeleteRestoreButton(table);
+    DT_updateViewButtons(table);
+}
+
+/** DataTable-Utility
+ * Update the Delete/Restore button text and color based on current state.
+ * If viewing deleted records, the button shows "Restore" in green.
+ * Otherwise, it shows "Delete" in red.
+ * @param {object} table - DataTable instance
+ */
+export function DT_updateDeleteRestoreButton(table) {
+    const btnApi = table.button('.btn-delete-restore');
+    if (!btnApi) {
+        console.warn('Delete/Restore button not found');
+        return;
+    }
+
+    // .node() may return a jQuery object, unwrap to DOM element
+    const btnNode = btnApi.node();
+    const btnEl = btnNode instanceof HTMLElement ? btnNode : btnNode[0];
+
+    if (btnEl) {
+        if (dt_show_deleted_records === 'deleted') {
+            btnApi.text('Restore');
+            btnEl.classList.remove('btn-danger');
+            btnEl.classList.add('btn-success');
+        } else {
+            btnApi.text('Delete');
+            btnEl.classList.remove('btn-success');
+            btnEl.classList.add('btn-danger');
+        }
+    }
+}
+
+/** DataTable-Utility
+ * Highlight the correct "View" sub-button (Active or Deleted).
+ * Ensures the UI reflects which dataset is currently being shown.
+ * @param {object} table - DataTable instance
+ */
+export function DT_updateViewButtons(table) {
+    const activeBtnApi = table.button('.buttons-active');
+    const deletedBtnApi = table.button('.buttons-deleted');
+
+    if (!activeBtnApi || !deletedBtnApi) {
+        console.warn('View buttons not found');
+        return;
+    }
+
+    // unwrap jQuery object to DOM element
+    const activeBtn = activeBtnApi.node();
+    const deletedBtn = deletedBtnApi.node();
+
+    const activeEl = activeBtn instanceof HTMLElement ? activeBtn : activeBtn[0];
+    const deletedEl = deletedBtn instanceof HTMLElement ? deletedBtn : deletedBtn[0];
+
+    // first child is the actual button
+
+    if (dt_show_deleted_records === 'active') {
+        activeEl.firstChild.classList.add('active');
+        deletedEl.firstChild.classList.remove('active');
+    } else {
+        deletedEl.firstChild.classList.add('active');
+        activeEl.firstChild.classList.remove('active');
+    }
+}
+
+/** DataTable-Utility
+ * Handle delete/restore action for a selected student row.
+ * Shows a confirmation modal, then submits an AJAX form to the server.
+ * After success, reloads the DataTable.
+ * @param {object} table - DataTable instance
+ * @param {string} action - form action url
+ * @param {string} message - message to display on confirm modal
+ */
+import { showConfirmModal } from "./message_models";
+import { submitAjaxForm } from "./ajax";
+export function DT_handleDeleteRestore(table, action, message) {
+    showConfirmModal(message, () => {
+        const form = document.createElement('form');
+        form.action = action;
+        form.method = 'delete';
+        form.setAttribute('data-method', 'delete');
+
+        form.addEventListener('ajax:success', () => {
+            table.ajax.reload();
+        }, { once: true });
+
+        submitAjaxForm(form);
+    });
 }
