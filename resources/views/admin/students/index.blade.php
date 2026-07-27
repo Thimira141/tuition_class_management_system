@@ -8,12 +8,13 @@
 
     <div class="container my-5">
         {{-- search box row --}}
-        <div class="row py-2">
+        {{-- <div class="row py-2 d-none"> <!-- remove this row, handle by dt -->
             <div class="col-md-8 col-sm-12 mb-3">
                 <div class="input-group bg-body-secondary rounded shadow align-items-center">
-                    <input type="text" class="form-control-lg bg-transparent border-0 focus-ring d-flex flex-fill"
+                    <input id="dt-student-index-q-input" type="text" class="form-control-lg bg-transparent border-0 focus-ring d-flex flex-fill"
                         placeholder="Search..." aria-label="Search...">
-                    <button class="btn position-absolute end-0 h-100 bg-body-secondary" type="button"><i class="bi bi-search"></i></button>
+                    <button class="btn position-absolute end-0 h-100 bg-body-secondary pe-none" type="button"><i
+                            class="bi bi-search"></i></button>
                 </div>
             </div>
             <div class="col-md-4 col-sm-12 mb-3">
@@ -22,9 +23,24 @@
                         data-bs-target="#new-student-model"><i class="bi bi-person-plus me-1"></i>Add New Student</button>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- data table --}}
-        <div class="row"></div>
+        <div class="row rounded shadow">
+            <div class="table-responsive">
+                <table id="dt-students-index-table" class="table table-hover m-0 rounded">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Tel</th>
+                            <th scope="col">DOB</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
 
     @include('admin.students.new')
@@ -33,6 +49,7 @@
 
 <script>
     const ROUTES = {
+        'students_dt_index': "{{ route('students.ajax.dt.index') }}",
         'guardians_ts': "{{ route('students.ajax.ts.guardians-index') }}",
         'students_store': "{{ route('students.ajax.store') }}",
         'students_update': "{{ route('students.ajax.update', ':student_code') }}",
@@ -44,4 +61,4 @@
     }
 </script>
 
-@vite(['resources/js/students.js'])
+@vite(['resources/js/students.js', 'resources/css/dt-imports.css'])
