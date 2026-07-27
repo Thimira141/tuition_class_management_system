@@ -18,6 +18,7 @@ const STUDENT_NEW_MODAL = '#new-student-model';
 const STUDENT_NEW_MODAL_FORM = '#new-edit-student-form';
 const STUDENT_NEW_MODAL_GUARDIAN_SELECT = '#new-student-model #student__guardian_id';
 const STUDENT_DELETE_FORM = '#delete-student-form';
+const STUDENT_VIEW_MODAL = '#view-student-model';
 
 // NEW GUARDIAN modal
 const GUARDIAN_NEW_MODAL = '#new-guardian-model';
@@ -154,6 +155,44 @@ async function setupStudentModal(mode, studentCode = null) {
 
 /**
  *
+ * @param {string} studentCode
+ */
+async function openStudentViewModal(studentCode) {
+    const ModalElement = document.querySelector(STUDENT_VIEW_MODAL);
+    const viewModal = createBootstrapModal(ModalElement);
+
+    if (!ModalElement || !viewModal) {
+        console.error('Student view modal elements not found');
+        return null;
+    }
+
+    // load data
+    const response = await load_data(ROUTES.students_show.replace(':student_code', studentCode), STUDENT_VIEW_MODAL);
+
+    const student = response?.student || response?.data?.student || {};
+    if (!student) {
+        console.log('Error Loading Data for student view modal');
+        return false;
+    }
+
+    for (const [key, value] of Object.entries(student)) {
+        ModalElement.querySelectorAll(`[name="student__${key}"], #student__${key}`).forEach(field => {
+            setFieldValue(field, value);
+        });
+    }
+    for (const [key, value] of Object.entries(student.guardian)) {
+        ModalElement.querySelectorAll(`[name="guardian__${key}"], #guardian__${key}`).forEach(field => {
+            setFieldValue(field, value);
+        });
+    }
+
+    // open modal
+    cleanupModalBackdrop();
+    viewModal.show();
+}
+
+/**
+ *
  * @param {String|Number} studentCode
  * @param {HTMLFormElement} form
  * @param {HTMLElement} modal
@@ -211,7 +250,7 @@ function initIndexDT() {
                     {
                         text: 'View', className: 'btn-info dt-action-btn', action: () => {
                             const selected = table.rows({ selected: true }).data();
-                            if (selected.length) console.log('View', selected[0].student__student_code);
+                            if (selected.length) openStudentViewModal(selected[0].student__student_code);
                         }
                     },
                     {
