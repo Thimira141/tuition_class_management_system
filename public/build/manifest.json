@@ -1,7 +1,7 @@
 {
-  "_ajax-DAq1hjKt.js": {
-    "file": "assets/ajax-DAq1hjKt.js",
-    "name": "ajax"
+  "_utility-Dbj2x4RB.js": {
+    "file": "assets/utility-Dbj2x4RB.js",
+    "name": "utility"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
     "file": "assets/bootstrap-icons-BeopsB42.woff",
@@ -24,22 +24,31 @@
       "assets/bootstrap-icons-BeopsB42.woff"
     ]
   },
+  "resources/css/dt-imports.css": {
+    "file": "assets/dt-imports-Bp72z3L2.css",
+    "name": "dt-imports",
+    "names": [
+      "dt-imports.css"
+    ],
+    "src": "resources/css/dt-imports.css",
+    "isEntry": true
+  },
   "resources/js/app.js": {
-    "file": "assets/app-DINUej-O.js",
+    "file": "assets/app-8qH1crl6.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_ajax-DAq1hjKt.js"
+      "_utility-Dbj2x4RB.js"
     ]
   },
   "resources/js/students.js": {
-    "file": "assets/students-BcWHn-7i.js",
+    "file": "assets/students-DcTtFORv.js",
     "name": "students",
     "src": "resources/js/students.js",
     "isEntry": true,
     "imports": [
-      "_ajax-DAq1hjKt.js"
+      "_utility-Dbj2x4RB.js"
     ]
   }
 }
