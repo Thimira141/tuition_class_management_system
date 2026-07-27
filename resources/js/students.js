@@ -170,6 +170,7 @@ async function loadStudentData(studentCode, form, modal) {
         });
     }
     // setting tom select element value manually because of ajax data load
+    studentGuardianSelect.clearOptions(); // remove old data
     studentGuardianSelect.addOption({id: student['guardian'].id, name:student['guardian'].name});
     studentGuardianSelect.setValue(student['guardian'].id);
 
