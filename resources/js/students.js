@@ -14,7 +14,7 @@ import 'datatables.net-select-bs5';
 
 // identifiers for NEW STUDENT modal
 const STUDENT_NEW_MODAL = '#new-student-model';
-const STUDENT_NEW_MODAL_TRIGGER = '#new-student-add-model-init-btn';
+// const STUDENT_NEW_MODAL_TRIGGER = '#new-student-add-model-init-btn';
 const STUDENT_NEW_MODAL_FORM = '#new-edit-student-form';
 const STUDENT_NEW_MODAL_GUARDIAN_SELECT = '#new-student-model #student__guardian_id';
 const STUDENT_DELETE_FORM = '#delete-student-form';
@@ -26,19 +26,20 @@ const GUARDIAN_NEW_MODAL_FORM = '#new-edit-guardian-form';
 
 // data table
 const STUDENT_DT_INDEX_TABLE = '#dt-students-index-table'; // table
-const STUDENT_DT_INDEX_Q_INPUT = '#dt-student-index-q-input'; // search field
+// const STUDENT_DT_INDEX_Q_INPUT = '#dt-student-index-q-input'; // search field
 
 // variables
 let DTable;
+let studentGuardianSelect;
 
 // NOTE: 'student__', 'guardian__' is prefix used to match DB aliases in server-side queries
 
 // inits
 document.addEventListener('DOMContentLoaded', () => {
     // init guardians select in new,edit form
-    const studentGuardianSelect = initStudentGuardianSelect();
+    studentGuardianSelect = initStudentGuardianSelect();
     // init new,edit model actions
-    triggerNewStudentModal();
+    // triggerNewStudentModal();
     triggerNewGuardianModal(); // for guardian modal
 
     formEventsTracker(studentGuardianSelect);
@@ -76,25 +77,28 @@ function formEventsTracker(studentGuardianSelect) {
             studentForm.method = 'put';
             studentForm.action = ROUTES.students_update.replace(':student_code', studentCode);
         }
+        // refresh when from event success
+        DTable.ajax.reload();
     });
 }
 
 /**
  * attach the trigger for new student button event
+ * @deprecated
  */
-function triggerNewStudentModal() {
-    const triggerBtn = document.querySelector(STUDENT_NEW_MODAL_TRIGGER);
+// function triggerNewStudentModal() {
+//     const triggerBtn = document.querySelector(STUDENT_NEW_MODAL_TRIGGER);
 
-    if (!triggerBtn) {
-        console.error('Student modal trigger not found');
-        return;
-    }
+//     if (!triggerBtn) {
+//         console.error('Student modal trigger not found');
+//         return;
+//     }
 
-    triggerBtn.addEventListener('click', (event) => {
-        event.preventDefault();
-        setupStudentModal('new');
-    });
-}
+//     triggerBtn.addEventListener('click', (event) => {
+//         event.preventDefault();
+//         setupStudentModal('new');
+//     });
+// }
 
 /**
  * tom-select, for guardian select
@@ -157,13 +161,17 @@ async function setupStudentModal(mode, studentCode = null) {
  */
 async function loadStudentData(studentCode, form, modal) {
     // get data from server
-    const response = await load_data(ROUTES.students_show.replace(':student_code', studentCode), modal);
+    const response = await load_data(ROUTES.students_show.replace(':student_code', studentCode), STUDENT_NEW_MODAL);
+    const student = response?.student || response?.data?.student || {};
     // fill form fields
-    for (const [key, value] of Object.entries(response.user)) {
-        modal.querySelectorAll(`[name="${key}"], #${key}`).forEach(field => {
+    for (const [key, value] of Object.entries(student)) {
+        modal.querySelectorAll(`[name="student__${key}"], #student__${key}`).forEach(field => {
             setFieldValue(field, value);
         });
     }
+    // setting tom select element value manually because of ajax data load
+    studentGuardianSelect.addOption({id: student['guardian'].id, name:student['guardian'].name});
+    studentGuardianSelect.setValue(student['guardian'].id);
 
     return response;
 }
@@ -208,7 +216,7 @@ function initIndexDT() {
                     {
                         text: 'Edit', className: 'btn-info dt-action-btn', action: () => {
                             const selected = table.rows({ selected: true }).data();
-                            if (selected.length) setupStudentModal('edit', selected[0]);
+                            if (selected.length) setupStudentModal('edit', selected[0].student__student_code);
                         }
                     },
                     {
