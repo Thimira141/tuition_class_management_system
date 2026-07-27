@@ -10,12 +10,33 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Traits\StripsPrefixes;
+use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller
 {
     // index() → returns JSON for DataTables (listing API).
-    public function index()
+    public function index(Request $request)
     {
+        $query = Student::query()->select([
+            // 'students.id as student__id',
+            'students.student_code as student__student_code',
+            'students.cover_img as student__cover_img',
+            'students.name as student__name',
+            'students.dob as student__dob',
+            'students.tel as student__tel',
+            'students.deleted_at as student__is_deleted'
+        ]);
+
+        if ($request->input('showDeleted', 'active') === 'deleted') {
+            // only trashed
+            $query->onlyTrashed();
+        } elseif ($request->input('showDeleted', 'active') === 'all') {
+            // both active + trashed
+            $query->withTrashed();
+        }
+
+        return DataTables::of($query)
+            ->make(true);
     }
 
 
@@ -87,7 +108,7 @@ class StudentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'data' => collect($student->toArray())->mapWithKeys(fn ($value, $key) => ["student__{$key}" => $value]), //  add student__ prefix
+            'data' => collect($student->toArray())->mapWithKeys(fn($value, $key) => ["student__{$key}" => $value]), //  add student__ prefix
         ], 200);
 
     }
