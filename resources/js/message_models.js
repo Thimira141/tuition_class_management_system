@@ -24,6 +24,11 @@ export function showToast(type, message, alert = false, alertType = 'danger') {
     toast.show();
 }
 
+/**
+ *
+ * @param {string} message
+ * @param {Function} onConfirm
+ */
 export function showConfirmModal(message, onConfirm) {
     const modalBody = document.getElementById('confirmModalBody');
     modalBody.textContent = message;
@@ -32,12 +37,18 @@ export function showConfirmModal(message, onConfirm) {
     const confirmModal = createBootstrapModal(modalElement);
 
     const proceedBtn = document.getElementById('confirmModalProceed');
-    const handler = () => {
+
+    // Remove any previous listeners
+    const newBtn = proceedBtn.cloneNode(true);
+    proceedBtn.parentNode.replaceChild(newBtn, proceedBtn);
+
+    // Add fresh listener, once
+    newBtn.addEventListener('click', () => {
         onConfirm();
         confirmModal.hide();
-    };
-    proceedBtn.addEventListener('click', handler, { once: true });
+    }, { once: true });
 
     cleanupModalBackdrop();
     confirmModal.show();
 }
+
