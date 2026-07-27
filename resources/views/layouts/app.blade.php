@@ -20,6 +20,12 @@
     <x-confirm-model />
     <x-feedback-model />
 
+    <script>
+        const DEFAULT_ROUTES = {
+            'MEMBER-IMG-PLACEHOLDER': "{{ asset('images/placeholder-image-member.svg') }}",
+        };
+    </script>
+
 
     @yield('content')
 
