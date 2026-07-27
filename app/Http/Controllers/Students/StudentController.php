@@ -215,7 +215,7 @@ class StudentController extends Controller
     public function show(string $student_code)
     {
         // get student from model
-        $student = Student::with('guardian')->where('student_code', $student_code)->firstOrFail();
+        $student = Student::withTrashed()->with('guardian')->where('student_code', $student_code)->firstOrFail();
         // todo compute other related info
         return response()->json([
             'status' => 'success',
