@@ -35,7 +35,7 @@ export default function initAjaxForms() {
     });
 }
 
-async function submitAjaxForm(form) {
+export async function submitAjaxForm(form) {
     const loader = document.getElementById('page-loader');
     if (loader) loader.classList.remove('d-none');
 
