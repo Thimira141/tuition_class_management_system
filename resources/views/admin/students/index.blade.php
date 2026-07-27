@@ -32,8 +32,8 @@
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Name</th>
-                            <th scope="col">Tel</th>
-                            <th scope="col">DOB</th>
+                            <th scope="col">Student Mobile</th>
+                            <th scope="col">Student DOB</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

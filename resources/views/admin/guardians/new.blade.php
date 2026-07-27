@@ -12,7 +12,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="NFM-title">
-                        Modal title
+                        Guardian Form
                     </h5>
                     <button type="reset" class="btn-close" aria-label="Close"
                      @if ($backTo)
@@ -25,13 +25,13 @@
                     <div class="container-fluid">
                         <div class="row py-2 mb-3 bg-body-tertiary shadow rounded justify-content-evenly">
                             <div class="col-12">
-                                <p class="border-bottom fs-4">Student Information</p>
+                                <p class="border-bottom fs-4">Guradian Information</p>
                             </div>
                             {{-- image upload --}}
                             <div class="col-md-2 col-sm-12 mb-3 d-flex align-items-center">
                                 <div
                                     class="w-100 h-auto position-relative cover-image-action-btn-hover-cover p-md-2 p-sm-5 rounded-circle bg-body-secondary shadow">
-                                    <img src="..." class="img-fluid rounded-top w-100" alt=""
+                                    <img src="{{ asset('images/placeholder-image-member.svg') }}" class="img-fluid rounded-top w-100" alt=""
                                         id="guardian__cover_img-preview"
                                         onerror="this.src='{{ asset('images/placeholder-image-member.svg') }}'" />
                                     <label

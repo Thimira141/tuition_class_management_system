@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // reusable functions
 
 /**
- *
  */
 function formEventsTracker(studentGuardianSelect) {
     const studentForm = document.querySelector(STUDENT_NEW_MODAL_FORM);
@@ -154,7 +153,7 @@ async function setupStudentModal(mode, studentCode = null) {
 }
 
 /**
- *
+ * open view modal and assign data to its fields
  * @param {string} studentCode
  */
 async function openStudentViewModal(studentCode) {
@@ -271,15 +270,15 @@ function initIndexDT() {
                     },
                     {
                         extend: 'collection',
-                        text: 'View',
+                        text: 'Records Filter',
                         buttons: [
                             {
-                                text: 'Active',
+                                text: 'Active Records',
                                 className: 'buttons-active',
                                 action: () => DT_setDeletedState('active', table)
                             },
                             {
-                                text: 'Deleted',
+                                text: 'Deleted Records',
                                 className: 'buttons-deleted',
                                 action: () => DT_setDeletedState('deleted', table)
                             }

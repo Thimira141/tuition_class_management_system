@@ -6,7 +6,7 @@
     <div class="col-md-2 col-sm-12 mb-3 d-flex align-items-center">
         <div
             class="w-100 h-auto position-relative cover-image-action-btn-hover-cover p-md-2 p-sm-5 rounded-circle bg-body-secondary shadow">
-            <img src="..." class="img-fluid rounded-top w-100" alt="" id="student__cover_img-preview"
+            <img src="{{ asset('images/placeholder-image-member.svg') }}" class="img-fluid rounded-top w-100" alt="" id="student__cover_img-preview"
                 onerror="this.src='{{ asset('images/placeholder-image-member.svg') }}'" />
         </div>
     </div>

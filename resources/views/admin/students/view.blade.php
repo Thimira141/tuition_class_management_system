@@ -1,8 +1,8 @@
 {{-- view student info model --}}
 <!-- Modal trigger button -->
-<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#view-student-model">
+{{-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#view-student-model">
     View student Launch
-</button>
+</button> --}}
 
 <!-- Modal Body -->
 <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
@@ -12,7 +12,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="VSM-title">
-                    View Student | STU-1245
+                    View Student
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
