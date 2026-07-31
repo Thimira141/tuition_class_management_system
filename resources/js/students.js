@@ -60,6 +60,7 @@ function formEventsTracker(studentGuardianSelect) {
         return;
     }
 
+    // when new guardian is created, select that guardian in tom-select
     guardian_formEventsTracker({
         onGuardianCreated: (guardianId) => {
             if (guardianId && studentGuardianSelect) {
@@ -169,21 +170,26 @@ async function openStudentViewModal(studentCode) {
     const response = await load_data(ROUTES.students_show.replace(':student_code', studentCode), STUDENT_VIEW_MODAL);
 
     const student = response?.student || response?.data?.student || {};
-    if (!student) {
+    const guardian = response?.guardian || response?.data?.guardian || {};
+    if (!student || !guardian) {
         console.log('Error Loading Data for student view modal');
         return false;
     }
-
+    // student data fill
     for (const [key, value] of Object.entries(student)) {
-        ModalElement.querySelectorAll(`[name="student__${key}"], #student__${key}`).forEach(field => {
+        ModalElement.querySelectorAll(`[name="${key}"], #${key}`).forEach(field => {
             setFieldValue(field, value);
         });
     }
-    for (const [key, value] of Object.entries(student.guardian)) {
-        ModalElement.querySelectorAll(`[name="guardian__${key}"], #guardian__${key}`).forEach(field => {
+    // guardian data fill
+    for (const [key, value] of Object.entries(guardian)) {
+        ModalElement.querySelectorAll(`[name="${key}"], #${key}`).forEach(field => {
             setFieldValue(field, value);
         });
     }
+    // setup cover image
+    const coverImgPreview = ModalElement.querySelector('img#student__cover_img-preview');
+    if (coverImgPreview) coverImgPreview.src = student.student__cover_img;
 
     // open modal
     cleanupModalBackdrop();
@@ -201,16 +207,21 @@ async function loadStudentData(studentCode, form, modal) {
     // get data from server
     const response = await load_data(ROUTES.students_show.replace(':student_code', studentCode), STUDENT_NEW_MODAL);
     const student = response?.student || response?.data?.student || {};
+    const guardian = response?.guardian || response?.data?.guardian || {};
     // fill form fields
     for (const [key, value] of Object.entries(student)) {
-        modal.querySelectorAll(`[name="student__${key}"], #student__${key}`).forEach(field => {
+        modal.querySelectorAll(`[name="${key}"], #${key}`).forEach(field => {
             setFieldValue(field, value);
         });
     }
+    // setup cover image
+    const coverImgPreview = modal.querySelector('img#student__cover_img-preview');
+    if (coverImgPreview) coverImgPreview.src = student.student__cover_img;
+
     // setting tom select element value manually because of ajax data load
     studentGuardianSelect.clearOptions(); // remove old data
-    studentGuardianSelect.addOption({id: student['guardian'].id, name:student['guardian'].name});
-    studentGuardianSelect.setValue(student['guardian'].id);
+    studentGuardianSelect.addOption({id: guardian.guardian__id, name:guardian.guardian__name});
+    studentGuardianSelect.setValue(guardian.guardian__id);
 
     return response;
 }
