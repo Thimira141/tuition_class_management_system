@@ -1,6 +1,6 @@
 {
-  "_utility-DX6SzWmP.js": {
-    "file": "assets/utility-DX6SzWmP.js",
+  "_utility-BKUIeIFI.js": {
+    "file": "assets/utility-BKUIeIFI.js",
     "name": "utility"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
@@ -34,21 +34,21 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-5KyNLz5l.js",
+    "file": "assets/app-BNu03IFi.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_utility-DX6SzWmP.js"
+      "_utility-BKUIeIFI.js"
     ]
   },
   "resources/js/students.js": {
-    "file": "assets/students-D7pjrUYa.js",
+    "file": "assets/students-BuMLuvyJ.js",
     "name": "students",
     "src": "resources/js/students.js",
     "isEntry": true,
     "imports": [
-      "_utility-DX6SzWmP.js"
+      "_utility-BKUIeIFI.js"
     ]
   }
 }
