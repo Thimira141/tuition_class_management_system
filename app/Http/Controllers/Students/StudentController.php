@@ -14,7 +14,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller
 {
-    // index() → returns JSON for DataTables (listing API).
+    /** index() → returns JSON for DataTables (listing API).
+     * Summary of index
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
     public function index(Request $request)
     {
         $query = Student::query()->select([
@@ -36,6 +41,7 @@ class StudentController extends Controller
         }
 
         return DataTables::of($query)
+            ->addColumn('student__cover_img', fn ($row) => Storage::url($row->student__cover_img))
             ->make(true);
     }
 
@@ -148,7 +154,7 @@ class StudentController extends Controller
 
                     $extension = $validated['student__cover_img']->getClientOriginalExtension();
                     $path = $validated['student__cover_img']
-                        ->storeAs('students', $student->student_id . '.' . $extension, 'public');
+                        ->storeAs('students', $student->student_code . '.' . $extension, 'public');
 
                     $student->cover_img = $path;
                 } catch (\Exception $e) {
@@ -211,12 +217,18 @@ class StudentController extends Controller
         }
     }
 
-    // show() → retrieve single student record.
+    /**
+     * show() → retrieve single student record.
+     * @param string $student_code
+     * @return \Illuminate\Http\JsonResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
     public function show(string $student_code)
     {
         // get student from model
         $student = Student::withTrashed()->with('guardian')->where('student_code', $student_code)->firstOrFail();
-        // todo compute other related info
+        $student->cover_img = Storage::url($student->cover_img);
+        // todo compute other related info, some modules are not yet completed;
         return response()->json([
             'status' => 'success',
             'data' => ['student' => $student]
@@ -238,7 +250,7 @@ class StudentController extends Controller
                 ->orWhere('nic', 'like', "%{$search}%");
         }
 
-        // todo: add a prefix 'guardian__'
+        // todo: add a prefix 'guardian__' and match with frontend
         $guardians = $query->limit(10)->get(['id', 'guardian_code', 'name', 'nic']);
 
         return response()->json($guardians);
