@@ -41,7 +41,7 @@ class StudentController extends Controller
         }
 
         return DataTables::of($query)
-            ->addColumn('student__cover_img', fn ($row) => Storage::url($row->student__cover_img))
+            ->addColumn('student__cover_img', fn ($student) => $student->student__cover_img ? Storage::url($student->student__cover_img) : null)
             ->make(true);
     }
 
@@ -226,12 +226,15 @@ class StudentController extends Controller
     public function show(string $student_code)
     {
         // get student from model
-        $student = Student::withTrashed()->with('guardian')->where('student_code', $student_code)->firstOrFail();
-        $student->cover_img = Storage::url($student->cover_img);
+        $student = Student::withTrashed()->where('student_code', $student_code)->firstOrFail();
+        $student->cover_img = $student->cover_img ? Storage::url($student->cover_img) : null;
         // todo compute other related info, some modules are not yet completed;
         return response()->json([
             'status' => 'success',
-            'data' => ['student' => $student]
+            'data' => [
+                'student' => collect($student->toArray())->mapWithKeys(fn($value, $key) => ["student__{$key}" => $value]),
+                'guardian' => collect($student->guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value])
+            ]
         ]);
     }
 
