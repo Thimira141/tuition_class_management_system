@@ -12,7 +12,8 @@ export function renderProfileRow(imageSrc, texts) {
     colImage.className = 'col-auto';
 
     const img = document.createElement('img');
-    img.className = 'h-100 p-1 mx-2 rounded-circle bg-body-secondary';
+    img.className = 'p-1 mx-2 rounded-circle bg-body-secondary';
+    img.style = 'height: 50px; width: 50px';
     img.alt = 'Profile';
 
     const safeImageSrc = imageSrc && String(imageSrc).trim() ? imageSrc : DEFAULT_ROUTES['MEMBER-IMG-PLACEHOLDER'];
