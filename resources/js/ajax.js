@@ -133,26 +133,27 @@ function showInvalidateData(form, errorBag) {
  */
 function resetFormImages(form) {
     form.querySelectorAll('img[data-image-reset]').forEach(img => {
-        const key = img.dataset.imageReset; // "appRoutes.userImagePlaceholder"
+        img.src = img.dataset.imageReset;
+        // const key = img.dataset.imageReset; // "appRoutes.userImagePlaceholder"
 
         // Resolve the value from window
-        const parts = key.split('.');
-        let value = window;
-        for (const part of parts) {
-            if (value && part in value) {
-                value = value[part];
-            } else {
-                value = null;
-                break;
-            }
-        }
+        // const parts = key.split('.');
+        // let value = window;
+        // for (const part of parts) {
+        //     if (value && part in value) {
+        //         value = value[part];
+        //     } else {
+        //         value = null;
+        //         break;
+        //     }
+        // }
 
-        if (value) {
-            img.dataset.imageReset = value; // replace with actual URL
-        }
+        // if (value) {
+        //     img.dataset.imageReset = value; // replace with actual URL
+        // }
 
-        // reset the image url
-        img.src = img.dataset.imageReset;
+        // // reset the image url
+        // img.src = img.dataset.imageReset;
 
         console.debug('Reset From Selected Images');
     });
