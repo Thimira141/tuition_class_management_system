@@ -31,6 +31,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link btn border {{ request()->routeIs('admin-guardians') ? 'active' : null }}"
+                        href="{{ route('admin-guardians') }}">
+                        <i class="bi bi-people-fill me-1"></i>Guardians
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link btn border" href="#announcements">
                         <i class="bi bi-file-richtext-fill me-1"></i>Exams
                     </a>
