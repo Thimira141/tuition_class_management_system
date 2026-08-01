@@ -26,8 +26,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     });
 
     Route::prefix('guardians')->group(function () {
-        // index route
+        Route::get('/', fn () => view('admin.guardians.index'))->name('admin-guardians');
         Route::prefix('ajax')->group(function () {
+            Route::get('/dt-index', [GuardianController::class, 'index'])->name('guardians.ajax.dt.index');
             Route::get('/show/{guardian_code}', [GuardianController::class, 'show'])->name('guardians.ajax.show');
             Route::post('/store', [GuardianController::class, 'store'])->name('guardians.ajax.store');
             Route::put('/update/{guardian_code}', [GuardianController::class, 'update'])->name('guardians.ajax.update');
