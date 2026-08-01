@@ -124,7 +124,7 @@ class GuardianController extends Controller
 
                     $extension = $validated['guardian__cover_img']->getClientOriginalExtension();
                     $path = $validated['guardian__cover_img']
-                        ->storeAs('guardians', $guardian->guardian_id . '.' . $extension, 'public');
+                        ->storeAs('guardians', $guardian->guardian_code . '.' . $extension, 'public');
 
                     $guardian->cover_img = $path;
                 } catch (\Exception $e) {
@@ -192,10 +192,11 @@ class GuardianController extends Controller
     {
         // get guardian from model
         $guardian = Guardian::where('guardian_code', $guardian_code)->firstOrFail();
+        $guardian->cover_img = $guardian->cover_img ? Storage::url($guardian->cover_img) : null;
         // todo compute other related info
         return response()->json([
             'status' => 'success',
-            'data' => ['guardian' => $guardian]
+            'data' => ['guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value])]
         ]);
     }
 
