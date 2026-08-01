@@ -9,16 +9,37 @@ use Illuminate\Validation\Rule;
 use App\Models\Guardian;
 use App\Traits\StripsPrefixes;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class GuardianController extends Controller
 {
-    // index() → returns JSON for DataTables (listing API).
-    public function index()
+    /**
+     * index() → returns JSON for DataTables (listing API).
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function index(Request $request)
     {
-    }
+        $query = Guardian::query()->select([
+            'guardians.guardian_code as guardian__guardian_code',
+            'guardians.cover_img as guardian__cover_img',
+            'guardians.name as guardian__name',
+            'guardians.deleted_at as guardian__is_deleted'
+        ]);
 
-    // tomSelect search, return id,code,name,nic fields
-    // load data via ajax return cols as request
+        if ($request->input('showDeleted', 'active') === 'deleted') {
+            // only trashed
+            $query->onlyTrashed();
+        } elseif ($request->input('showDeleted', 'active') === 'all') {
+            // both active + trashed
+            $query->withTrashed();
+        }
+
+        return DataTables::of($query)
+            ->addColumn('guardian__cover_img', fn($guardian) => $guardian->guardian__cover_img ? Storage::url($guardian->guardian__cover_img) : null)
+            ->make(true);
+    }
 
     /**
      * store() → insert new guardian.
@@ -153,7 +174,7 @@ class GuardianController extends Controller
         }
     }
 
-  /**
+    /**
      * destroy() → soft delete guardian.
      * @param string $guardian_code
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -187,7 +208,12 @@ class GuardianController extends Controller
         }
     }
 
-    // show() → retrieve single guardian record.
+    /**
+     * show() → retrieve single guardian record.
+     * @param string $guardian_code
+     * @return \Illuminate\Http\JsonResponse
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
     public function show(string $guardian_code)
     {
         // get guardian from model
