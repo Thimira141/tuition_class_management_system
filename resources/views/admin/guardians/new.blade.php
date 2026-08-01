@@ -15,7 +15,7 @@
                         Guardian Form
                     </h5>
                     <button type="reset" class="btn-close" aria-label="Close"
-                     @if ($backTo)
+                     @if ($backTo??false)
                         data-bs-target="{{ $backTo }}" data-bs-toggle="modal"
                     @else
                         data-bs-dismiss="modal"
@@ -64,7 +64,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-secondary"
-                    @if ($backTo)
+                    @if ($backTo??false)
                         data-bs-target="{{ $backTo }}" data-bs-toggle="modal"
                     @else
                         data-bs-dismiss="modal"
