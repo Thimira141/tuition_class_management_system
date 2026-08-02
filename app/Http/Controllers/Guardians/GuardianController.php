@@ -25,6 +25,8 @@ class GuardianController extends Controller
             'guardians.guardian_code as guardian__guardian_code',
             'guardians.cover_img as guardian__cover_img',
             'guardians.name as guardian__name',
+            'guardians.tel as guardian__tel',
+            'guardians.nic as guardian__nic',
             'guardians.deleted_at as guardian__is_deleted'
         ]);
 
@@ -222,7 +224,10 @@ class GuardianController extends Controller
         // todo compute other related info
         return response()->json([
             'status' => 'success',
-            'data' => ['guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value])]
+            'data' => [
+                'guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]),
+                'students' => $guardian->students()->withTrashed()->get(['name','student_code', 'cover_img', 'deleted_at'])
+            ]
         ]);
     }
 
