@@ -49,6 +49,9 @@ export function formEventsTracker(options = {}) {
             guardianForm.action = ROUTES.guardians_update.replace(':guardian_code', guardianCode);
         }
 
+        // reload the dt
+        DTable.ajax.reload();
+
         if (guardianId && typeof options.onGuardianCreated === 'function') {
             options.onGuardianCreated(guardianId);
         }
@@ -115,16 +118,21 @@ async function setupGuardianModal(mode, guardianCode = null) {
  */
 async function loadGuardianData(guardianCode, form, modal) {
     // get data from server
-    const response = await load_data(ROUTES.guardians_show.replace(':guardian_code', guardianCode), modal);
-    // fill form fields
-    for (const [key, value] of Object.entries(response.user)) {
+    const response = await load_data(ROUTES.guardians_show.replace(':guardian_code', guardianCode), GUARDIAN_NEW_MODAL);
+    const guardian = response?.guardian || response?.data?.guardian || {};
+    if (!guardian) {
+        console.log('Error Loading Data for student view modal');
+        return false;
+    }
+    // guardian data fill
+    for (const [key, value] of Object.entries(guardian)) {
         modal.querySelectorAll(`[name="${key}"], #${key}`).forEach(field => {
             setFieldValue(field, value);
         });
-        // setup cover image
-        const coverImgPreview = modal.querySelector('img#guardian__cover_img-preview');
-        if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img;
     }
+    // setup cover image
+    const coverImgPreview = modal.querySelector('img#guardian__cover_img-preview');
+    if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img;
 
     return response;
 }
