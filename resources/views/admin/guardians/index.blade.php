@@ -33,7 +33,7 @@
                             <th scope="col"></th>
                             <th scope="col">Name</th>
                             <th scope="col">guardian Mobile</th>
-                            <th scope="col">guardian DOB</th>
+                            <th scope="col">guardian NIC</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
