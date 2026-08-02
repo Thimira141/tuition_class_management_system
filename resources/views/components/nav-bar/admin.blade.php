@@ -20,6 +20,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link btn border {{ request()->routeIs('admin-classes') ? 'active' : null }}"
+                        href="{{ route('admin-classes') }}">
+                        <i class="bi bi-person-video3 me-1"></i>Classes
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link btn border" href="#announcements">
                         <i class="bi bi-file-bar-graph me-1"></i>Attendance
                     </a>

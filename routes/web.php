@@ -35,4 +35,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::delete('/destroy/{guardian_code}', [GuardianController::class, 'destroy'])->name('guardians.ajax.destroy');
         });
     });
+
+    Route::prefix('classes')->group(function () {
+        Route::get('/', fn () => view('admin.classes.index'))->name('admin-classes');
+    });
 });
