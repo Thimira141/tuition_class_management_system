@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formEventsTracker();
     // init dt
     DTable = initIndexDT();
+    DT_setDeletedState('active', DTable);
 });
 
 // reusable functions
