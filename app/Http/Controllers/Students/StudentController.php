@@ -233,7 +233,12 @@ class StudentController extends Controller
             'status' => 'success',
             'data' => [
                 'student' => collect($student->toArray())->mapWithKeys(fn($value, $key) => ["student__{$key}" => $value]),
-                'guardian' => collect($student->guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value])
+                'guardian' => $student->guardian()->withTrashed()->first([
+                    'name as guardian__name',
+                    'nic as guardian__nic',
+                    'tel as guardian__tel',
+                    'remarks as guardian__remarks',
+                ])
             ]
         ]);
     }
