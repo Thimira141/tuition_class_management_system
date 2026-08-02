@@ -15,6 +15,7 @@ const GUARDIAN_NEW_MODAL = '#new-guardian-model';
 const GUARDIAN_NEW_MODAL_TRIGGER = '#new-guardian-add-model-init-btn';
 const GUARDIAN_NEW_MODAL_FORM = '#new-edit-guardian-form';
 const GUARDIAN_VIEW_MODAL = '#view-guardian-model';
+const GUARDIAN_VIEW_MODAL_STUDENTS_LIST = '#guardian-students-list-display';
 
 // data table
 const GUARDIAN_DT_INDEX_TABLE = '#dt-guardians-index-table'; // table
@@ -154,6 +155,7 @@ async function openGuardianViewModal(guardianCode) {
     const response = await load_data(ROUTES.guardians_show.replace(':guardian_code', guardianCode), GUARDIAN_VIEW_MODAL);
 
     const guardian = response?.guardian || response?.data?.guardian || {};
+    const students = response?.students || response?.data?.students || {};
     if (!guardian) {
         console.log('Error Loading Data for guardian view modal');
         return false;
@@ -164,10 +166,18 @@ async function openGuardianViewModal(guardianCode) {
             setFieldValue(field, value);
         });
     }
-    // todo: students list data fill
     // setup cover image
     const coverImgPreview = ModalElement.querySelector('img#guardian__cover_img-preview');
     if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img;
+
+    // render students list data
+    const studentsListRender = document.querySelector(GUARDIAN_VIEW_MODAL_STUDENTS_LIST);
+    if (studentsListRender) {
+        studentsListRender.innerHTML = null;
+        for (const [key, value] of Object.entries(students)) {
+            studentsListRender.appendChild(renderProfileRow(value.student__cover_img, [value.student__name, '#'+value.student__student_code]))
+        }
+    }
 
     // open modal
     cleanupModalBackdrop();

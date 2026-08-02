@@ -43,7 +43,7 @@
                     </div>
                     <div class="tab-pane fade" id="students-tab-pane" role="tabpanel" aria-labelledby="attendance-tab"
                         tabindex="0">
-                        <p class="fs-1">students-tab-pane</p>
+                        @include('admin.guardians.view-components.students')
                     </div>
                 </div>
             </div>

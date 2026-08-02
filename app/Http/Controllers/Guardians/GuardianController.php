@@ -226,7 +226,9 @@ class GuardianController extends Controller
             'status' => 'success',
             'data' => [
                 'guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]),
-                'students' => $guardian->students()->withTrashed()->get(['name','student_code', 'cover_img', 'deleted_at'])
+                'students' => $guardian->students()->withTrashed()->get([
+                    'name as student__name', 'student_code as student__student_code', 'cover_img as student__cover_img', 'deleted_at as student__deleted_at'
+                ])
             ]
         ]);
     }
