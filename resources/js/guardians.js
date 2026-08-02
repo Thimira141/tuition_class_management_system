@@ -133,7 +133,7 @@ async function loadGuardianData(guardianCode, form, modal) {
     }
     // setup cover image
     const coverImgPreview = modal.querySelector('img#guardian__cover_img-preview');
-    if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img;
+    if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img_url;
 
     return response;
 }
@@ -168,14 +168,14 @@ async function openGuardianViewModal(guardianCode) {
     }
     // setup cover image
     const coverImgPreview = ModalElement.querySelector('img#guardian__cover_img-preview');
-    if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img;
+    if (coverImgPreview) coverImgPreview.src = guardian.guardian__cover_img_url;
 
     // render students list data
     const studentsListRender = document.querySelector(GUARDIAN_VIEW_MODAL_STUDENTS_LIST);
     if (studentsListRender) {
         studentsListRender.innerHTML = null;
         for (const [key, value] of Object.entries(students)) {
-            studentsListRender.appendChild(renderProfileRow(value.student__cover_img, [value.student__name, '#'+value.student__student_code]))
+            studentsListRender.appendChild(renderProfileRow(value.student__cover_img_url, [value.student__name, '#'+value.student__student_code]))
         }
     }
 
@@ -204,7 +204,7 @@ function initIndexDT() {
                 name: 'guardians.name',
                 orderable: true, searchable: true,
                 render: (_, __, row) => renderProfileRow(
-                    row.guardian__cover_img,
+                    row.guardian__cover_img_url,
                     [row.guardian__name, '#' + row.guardian__guardian_code]
                 )
             },

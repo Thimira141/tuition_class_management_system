@@ -39,7 +39,7 @@ class GuardianController extends Controller
         }
 
         return DataTables::of($query)
-            ->addColumn('guardian__cover_img', fn($guardian) => $guardian->guardian__cover_img ? Storage::url($guardian->guardian__cover_img) : null)
+            ->addColumn('guardian__cover_img_url', fn($guardian) => $guardian->guardian__cover_img ? Storage::url($guardian->guardian__cover_img) : asset('images/placeholder-image-member.svg'))
             ->make(true);
     }
 
@@ -218,20 +218,29 @@ class GuardianController extends Controller
      */
     public function show(string $guardian_code)
     {
-        // get guardian from model
         $guardian = Guardian::where('guardian_code', $guardian_code)->firstOrFail();
-        $guardian->cover_img = $guardian->cover_img ? Storage::url($guardian->cover_img) : null;
-        // todo compute other related info
+        $students = $guardian->students()
+            ->withTrashed()
+            ->get(['id', 'name', 'student_code', 'cover_img', 'deleted_at'])
+            ->map(function ($student) {
+                return [
+                    'student__name' => $student->name,
+                    'student__student_code' => $student->student_code,
+                    'student__cover_img' => $student->cover_img, // raw path
+                    'student__cover_img_url' => $student->cover_img_url, // accessor
+                    'student__deleted_at' => $student->deleted_at,
+                ];
+            });
+
         return response()->json([
             'status' => 'success',
             'data' => [
                 'guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]),
-                'students' => $guardian->students()->withTrashed()->get([
-                    'name as student__name', 'student_code as student__student_code', 'cover_img as student__cover_img', 'deleted_at as student__deleted_at'
-                ])
+                'students' => $students
             ]
         ]);
     }
+
 
     /**
      * validate form data using given rules

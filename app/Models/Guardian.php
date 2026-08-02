@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Guardian extends Model
 {
@@ -20,6 +21,7 @@ class Guardian extends Model
         'address',
         'remarks',
     ];
+    protected $appends = ['cover_img_url'];
 
     /**
      * A guardian can have many students.
@@ -44,5 +46,14 @@ class Guardian extends Model
                 $guardian->save();
             }
         });
+    }
+
+    /**
+     * This creates a virtual attribute: cover_img_url, for url
+     * @return string
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function getCoverImgUrlAttribute() {
+        return $this->cover_img ? url(Storage::url($this->cover_img)) : asset('images/placeholder-image-member.svg');
     }
 }

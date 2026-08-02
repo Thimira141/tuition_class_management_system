@@ -41,7 +41,7 @@ class StudentController extends Controller
         }
 
         return DataTables::of($query)
-            ->addColumn('student__cover_img', fn ($student) => $student->student__cover_img ? Storage::url($student->student__cover_img) : null)
+            ->addColumn('student__cover_img_url', fn ($student) => $student->student__cover_img ? Storage::url($student->student__cover_img) : asset('images/placeholder-image-member.svg'))
             ->make(true);
     }
 
@@ -227,7 +227,7 @@ class StudentController extends Controller
     {
         // get student from model
         $student = Student::withTrashed()->where('student_code', $student_code)->firstOrFail();
-        $student->cover_img = $student->cover_img ? Storage::url($student->cover_img) : null;
+        // $student->cover_img_url = $student->cover_img_url;
         // todo compute other related info, some modules are not yet completed;
         return response()->json([
             'status' => 'success',

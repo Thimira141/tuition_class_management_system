@@ -189,7 +189,7 @@ async function openStudentViewModal(studentCode) {
     }
     // setup cover image
     const coverImgPreview = ModalElement.querySelector('img#student__cover_img-preview');
-    if (coverImgPreview) coverImgPreview.src = student.student__cover_img;
+    if (coverImgPreview) coverImgPreview.src = student.student__cover_img_url;
 
     // open modal
     cleanupModalBackdrop();
@@ -216,7 +216,7 @@ async function loadStudentData(studentCode, form, modal) {
     }
     // setup cover image
     const coverImgPreview = modal.querySelector('img#student__cover_img-preview');
-    if (coverImgPreview) coverImgPreview.src = student.student__cover_img;
+    if (coverImgPreview) coverImgPreview.src = student.student__cover_img_url;
 
     // setting tom select element value manually because of ajax data load
     studentGuardianSelect.clearOptions(); // remove old data
@@ -246,7 +246,7 @@ function initIndexDT() {
                 name: 'students.name',
                 orderable: true, searchable: true,
                 render: (_, __, row) => renderProfileRow(
-                    row.student__cover_img,
+                    row.student__cover_img_url,
                     [row.student__name, '#' + row.student__student_code]
                 )
             },
