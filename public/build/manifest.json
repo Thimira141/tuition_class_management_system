@@ -42,13 +42,24 @@
       "_utility-BKUIeIFI.js"
     ]
   },
+  "resources/js/guardians.js": {
+    "file": "assets/guardians-BpBYO2j2.js",
+    "name": "guardians",
+    "src": "resources/js/guardians.js",
+    "isEntry": true,
+    "imports": [
+      "_utility-BKUIeIFI.js"
+    ]
+  },
   "resources/js/students.js": {
-    "file": "assets/students-BuMLuvyJ.js",
+    "file": "assets/students-Co1pBYNw.js",
     "name": "students",
     "src": "resources/js/students.js",
     "isEntry": true,
     "imports": [
-      "_utility-BKUIeIFI.js"
+      "_utility-BKUIeIFI.js",
+      "resources/js/guardians.js",
+      "resources/js/guardians.js"
     ]
   }
 }
