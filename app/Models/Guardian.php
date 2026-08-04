@@ -43,7 +43,7 @@ class Guardian extends Model
             if (empty($guardian->guardian_code)) {
                 $year = now()->year;
                 $guardian->guardian_code = $year . str_pad($guardian->id, 6, '0', STR_PAD_LEFT);
-                $guardian->save();
+                $guardian->saveQuietly();
             }
         });
     }

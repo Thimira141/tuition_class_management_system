@@ -46,7 +46,7 @@ class Student extends Model
             if (empty($student->student_code)) {
                 $year = now()->year;
                 $student->student_code = $year . str_pad($student->id, 6, '0', STR_PAD_LEFT);
-                $student->save();
+                $student->saveQuietly();
             }
         });
     }
