@@ -218,7 +218,7 @@ class GuardianController extends Controller
      */
     public function show(string $guardian_code)
     {
-        $guardian = Guardian::where('guardian_code', $guardian_code)->firstOrFail();
+        $guardian = Guardian::withTrashed()->where('guardian_code', $guardian_code)->firstOrFail();
         $students = $guardian->students()
             ->withTrashed()
             ->get(['id', 'name', 'student_code', 'cover_img', 'deleted_at'])
