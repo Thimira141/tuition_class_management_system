@@ -59,4 +59,13 @@ class Student extends Model
     public function getCoverImgUrlAttribute() {
         return $this->cover_img ? url(Storage::url($this->cover_img)) : asset('images/placeholder-image-member.svg');
     }
+
+    /**
+     * Classes this student belongs to
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Classroom, Student, \Illuminate\Database\Eloquent\Relations\Pivot>
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function classrooms() {
+        return $this->belongsToMany(Classroom::class, 'class_student');
+    }
 }
