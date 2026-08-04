@@ -1,8 +1,8 @@
-{{-- entry point for classes area --}}
+{{-- entry point for classrooms area --}}
 
 @extends('layouts.admin')
 
-@section('title', 'Classes')
+@section('title', 'classrooms')
 
 @section('content-c1')
 
@@ -24,15 +24,17 @@
                 </div>
             </div>
         </div> --}}
-        <p>classes index</p>
+        <p>classrooms index</p>
         {{-- data table --}}
         <div class="row rounded shadow">
             <div class="table-responsive">
-                <table id="dt-classes-index-table" class="table table-hover m-0 rounded">
+                <table id="dt-classrooms-index-table" class="table table-hover m-0 rounded">
                     <thead>
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Class</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Students</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -42,6 +44,6 @@
         </div>
     </div>
 
-    {{-- @include('admin.classes.new')
-    @include('admin.classes.view') --}}
+    @include('admin.classrooms.new')
+    @include('admin.classrooms.view')
 @endsection

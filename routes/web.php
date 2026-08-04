@@ -36,7 +36,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         });
     });
 
-    Route::prefix('classes')->group(function () {
-        Route::get('/', fn () => view('admin.classes.index'))->name('admin-classes');
+    Route::prefix('classrooms')->group(function () {
+        Route::get('/', fn () => view('admin.classrooms.index'))->name('admin-classrooms');
     });
 });
