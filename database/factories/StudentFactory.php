@@ -20,6 +20,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
+            'student_code' => now()->format('Y') . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
             'name' => $this->faker->name(),
             'dob' => $this->faker->date(),
             'joined_at' => $this->faker->date(),

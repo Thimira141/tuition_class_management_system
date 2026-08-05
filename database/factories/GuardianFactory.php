@@ -18,6 +18,7 @@ class GuardianFactory extends Factory
     public function definition(): array
     {
         return [
+            'guardian_code' => now()->format('Y') . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
             'name' => $this->faker->name(),
             'nic' => $this->faker->numerify('############V'),
             'email' => $this->faker->email(),
