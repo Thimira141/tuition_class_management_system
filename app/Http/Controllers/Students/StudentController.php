@@ -68,17 +68,7 @@ class StudentController extends Controller
         $validated = $validate->validated();
         // store data via model
         try {
-            $student = Student::create([
-                'name' => $validated['student__name'],
-                'nic' => $validated['student__nic'],
-                'dob' => $validated['student__dob'],
-                'joined_at' => $validated['student__joined_at'],
-                'email' => $validated['student__email'],
-                'tel' => $validated['student__tel'],
-                'address' => $validated['student__address'],
-                'remarks' => $validated['student__remarks'],
-                'guardian_id' => $validated['student__guardian_id'],
-            ]);
+            $student = Student::create(StripsPrefixes::stripPrefix(collect($validated)->except('student__cover_img')->toArray(), 'student__'));
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',

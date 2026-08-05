@@ -65,14 +65,7 @@ class GuardianController extends Controller
         $validated = $validate->validated();
         // store data via model
         try {
-            $guardian = Guardian::create([
-                'name' => $validated['guardian__name'],
-                'nic' => $validated['guardian__nic'],
-                'email' => $validated['guardian__email'],
-                'tel' => $validated['guardian__tel'],
-                'address' => $validated['guardian__address'],
-                'remarks' => $validated['guardian__remarks'],
-            ]);
+            $guardian = Guardian::create(StripsPrefixes::stripPrefix(collect($validated)->except('guardian__cover_img')->toArray(), 'guardian__'));
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
