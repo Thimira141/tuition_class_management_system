@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Classroom extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     /**
      * @var string $table table name
@@ -46,6 +47,16 @@ class Classroom extends Model
      * @author Thimira Dilshan <thimirad865@gmail.com>
      */
     public function students() {
-        return $this->belongsToMany(Student::class, 'class_student');
+        return $this->belongsToMany(Student::class, 'class_student', 'class_id', 'student_id');
+    }
+
+    /**
+     * Use class_code instead of id for route model binding.
+     * @return string
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function getRouteKeyName()
+    {
+        return 'class_code';
     }
 }

@@ -66,6 +66,6 @@ class Student extends Model
      * @author Thimira Dilshan <thimirad865@gmail.com>
      */
     public function classrooms() {
-        return $this->belongsToMany(Classroom::class, 'class_student');
+        return $this->belongsToMany(Classroom::class, 'class_student', 'student_id', 'class_id');
     }
 }

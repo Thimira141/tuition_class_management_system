@@ -3,6 +3,7 @@
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Guardians\GuardianController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Classrooms;
 
 require __DIR__.'/auth.php';
 
@@ -38,5 +39,18 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::prefix('classrooms')->group(function () {
         Route::get('/', fn () => view('admin.classrooms.index'))->name('admin-classrooms');
+        Route::prefix('ajax')->group(function () {
+            Route::get('/dt-index', [Classrooms\ClassroomController::class, 'index'])->name('classrooms.ajax.dt.index');
+            Route::get('/show/{classroom}', [Classrooms\ClassroomController::class, 'show'])->name('classrooms.ajax.show');
+            Route::post('/store', [Classrooms\ClassroomController::class, 'store'])->name('classrooms.ajax.store');
+            Route::put('/update/{classroom}', [Classrooms\ClassroomController::class, 'update'])->name('classrooms.ajax.update');
+            Route::delete('/destroy/{classroom}', [Classrooms\ClassroomController::class, 'destroy'])->name('classrooms.ajax.destroy');
+            // ClassroomStudent
+            Route::prefix('{classroom}/students')->group(function () {
+                Route::get('/dt-index', [Classrooms\ClassroomStudentController::class, 'index'])->name('classrooms.student.ajax.dt.index');
+                Route::post('/attach', [Classrooms\ClassroomStudentController::class, 'attach'])->name('classrooms.student.attach');
+                Route::post('/detach', [Classrooms\ClassroomStudentController::class, 'detach'])->name('classrooms.student.detach');
+            });
+        });
     });
 });
