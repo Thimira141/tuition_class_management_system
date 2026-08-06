@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string('tel', 20);
             $table->string('address', 256);
             $table->string('remarks', 256)->nullable();
-            $table->boolean('is_deleted')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,7 +36,6 @@ return new class extends Migration {
             $table->string('tel', 20);
             $table->string('address', 256);
             $table->string('remarks', 256)->nullable();
-            $table->boolean('is_deleted')->default(false);
 
             // Foreign key to guardians
             $table->unsignedBigInteger('guardian_id');
