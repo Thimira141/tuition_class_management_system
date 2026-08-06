@@ -268,7 +268,7 @@ export function DT_handleDeleteRestore(table, action, message) {
         form.setAttribute('data-method', 'delete');
 
         form.addEventListener('ajax:success', () => {
-            table.ajax.reload();
+            table.ajax.reload(null, false);
         }, { once: true });
 
         submitAjaxForm(form);
