@@ -12,7 +12,7 @@ class Guardian extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'guardian_code',
+        // 'guardian_code', auto generated
         'cover_img',
         'name',
         'nic',

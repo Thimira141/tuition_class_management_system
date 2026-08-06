@@ -12,7 +12,7 @@ class Student extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'student_code',
+        // 'student_code', auto generated
         'cover_img',
         'name',
         'nic',

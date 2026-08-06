@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Route;
 
 class Classroom extends Model
 {
@@ -16,7 +17,7 @@ class Classroom extends Model
     protected $table = 'classes';
 
     protected $fillable = [
-        'class_code',
+        // 'class_code',auto generated
         'name',
         'grade',
         'remarks',
@@ -46,7 +47,8 @@ class Classroom extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Student, Classroom, \Illuminate\Database\Eloquent\Relations\Pivot>
      * @author Thimira Dilshan <thimirad865@gmail.com>
      */
-    public function students() {
+    public function students()
+    {
         return $this->belongsToMany(Student::class, 'class_student', 'class_id', 'student_id');
     }
 
