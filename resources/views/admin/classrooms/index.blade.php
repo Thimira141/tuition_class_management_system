@@ -46,4 +46,5 @@
 
     @include('admin.classrooms.new')
     @include('admin.classrooms.view')
+    @include('admin.classrooms.students')
 @endsection
