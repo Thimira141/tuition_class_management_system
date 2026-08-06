@@ -27,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Bind classroom by class_code and include trashed
-        Route::bind('classroom', fn ($value) =>  Classroom::withTrashed()->where(Classroom::getRouteKeyName(), $value)->firstOrFail());
+        Route::bind('classroom', function ($value) {
+            $classroom = new Classroom;
+            return Classroom::withTrashed()->where($classroom->getRouteKeyName(), $value)->firstOrFail();
+        });
     }
 }
