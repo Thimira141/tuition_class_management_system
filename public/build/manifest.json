@@ -1,6 +1,10 @@
 {
-  "_utility-BKUIeIFI.js": {
-    "file": "assets/utility-BKUIeIFI.js",
+  "_select.bootstrap5-Dj8POj6Q.js": {
+    "file": "assets/select.bootstrap5-Dj8POj6Q.js",
+    "name": "select.bootstrap5"
+  },
+  "_utility-BvE6lW4W.js": {
+    "file": "assets/utility-BvE6lW4W.js",
     "name": "utility"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
@@ -34,30 +38,54 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-BNu03IFi.js",
+    "file": "assets/app-DuPcIbtM.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_utility-BKUIeIFI.js"
+      "_utility-BvE6lW4W.js"
+    ]
+  },
+  "resources/js/classroom_students.js": {
+    "file": "assets/classroom_students-CcD-TqTe.js",
+    "name": "classroom_students",
+    "src": "resources/js/classroom_students.js",
+    "isEntry": true,
+    "imports": [
+      "_utility-BvE6lW4W.js",
+      "_select.bootstrap5-Dj8POj6Q.js"
+    ]
+  },
+  "resources/js/classrooms.js": {
+    "file": "assets/classrooms-DqsIr0gr.js",
+    "name": "classrooms",
+    "src": "resources/js/classrooms.js",
+    "isEntry": true,
+    "imports": [
+      "_utility-BvE6lW4W.js",
+      "_select.bootstrap5-Dj8POj6Q.js",
+      "resources/js/classroom_students.js",
+      "resources/js/classroom_students.js"
     ]
   },
   "resources/js/guardians.js": {
-    "file": "assets/guardians-BTEM79Az.js",
+    "file": "assets/guardians-CCI9BcGY.js",
     "name": "guardians",
     "src": "resources/js/guardians.js",
     "isEntry": true,
     "imports": [
-      "_utility-BKUIeIFI.js"
+      "_utility-BvE6lW4W.js",
+      "_select.bootstrap5-Dj8POj6Q.js"
     ]
   },
   "resources/js/students.js": {
-    "file": "assets/students-Cih-oWrg.js",
+    "file": "assets/students-OzT8mo_n.js",
     "name": "students",
     "src": "resources/js/students.js",
     "isEntry": true,
     "imports": [
-      "_utility-BKUIeIFI.js",
+      "_utility-BvE6lW4W.js",
+      "_select.bootstrap5-Dj8POj6Q.js",
       "resources/js/guardians.js",
       "resources/js/guardians.js"
     ]
