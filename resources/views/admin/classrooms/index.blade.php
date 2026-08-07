@@ -33,8 +33,8 @@
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Class</th>
+                            <th scope="col">Class Code</th>
                             <th scope="col">Grade</th>
-                            <th scope="col">Students</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -48,3 +48,18 @@
     @include('admin.classrooms.view')
     @include('admin.classrooms.students')
 @endsection
+
+<script>
+    const ROUTES = {
+        'classrooms_dt_index': "{{ route('classrooms.ajax.dt.index') }}",
+        'classrooms_store': "{{ route('classrooms.ajax.store') }}",
+        'classrooms_update': "{{ route('classrooms.ajax.update', ':classroom_code') }}",
+        'classrooms_show': "{{ route('classrooms.ajax.show', ':classroom_code') }}",
+        'classrooms_destroy': "{{ route('classrooms.ajax.destroy', ':classroom_code') }}",
+        'classroom_students_dt_index': "{{ route('classrooms.student.ajax.dt.index', ':classroom') }}",
+        'classroom_student_attach': "{{ route('classrooms.student.attach', ':classroom') }}",
+        'classroom_student_detach': "{{ route('classrooms.student.detach', ':classroom') }}",
+    }
+</script>
+
+@vite(['resources/js/classrooms.js', 'resources/css/dt-imports.css'])

@@ -6,6 +6,7 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js',
                 'resources/js/students.js', 'resources/js/guardians.js',
+                'resources/js/classrooms.js', 'resources/js/classroom_students.js',
                 'resources/css/dt-imports.css',
             ],
             refresh: true,

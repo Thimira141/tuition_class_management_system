@@ -1,9 +1,9 @@
 {{-- modal handle students index/attach/detach for classroom --}}
 
 <!-- Modal trigger button -->
-<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#new-classroom-students-model">
+{{-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#new-classroom-students-model">
     Add new classroom students
-</button>
+</button> --}}
 
 <!-- Modal Body -->
 <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
@@ -15,7 +15,6 @@
                 <h5 class="modal-title" id="CS-FM-title">
                     Add/Remove Students from class
                 </h5>
-                {{-- todo make open the previous modal->student modal --}}
                 <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

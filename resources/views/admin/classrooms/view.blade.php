@@ -1,8 +1,8 @@
 {{-- view classroom info model --}}
 <!-- Modal trigger button -->
-<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#view-classroom-model">
+{{-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#view-classroom-model">
     View Classroom Launch
-</button>
+</button> --}}
 
 <!-- Modal Body -->
 <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->

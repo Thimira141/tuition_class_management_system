@@ -2,4 +2,5 @@
     <div class="col-12">
         <p class="border-bottom fs-4">Students List</p>
     </div>
+    <div class="col-12" id="classroom-students-list-display"></div>
 </div>
