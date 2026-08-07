@@ -73,7 +73,7 @@ class ClassroomStudentController extends Controller
         // get validated data
         $validated = $validate->validated();
         try {
-            $classroom->students()->attach($validated['student_ids']);
+            $classroom->students()->syncWithoutDetaching($validated['student_ids']);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Students attached successfully!',
