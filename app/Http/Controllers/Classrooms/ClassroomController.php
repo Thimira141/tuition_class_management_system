@@ -165,8 +165,9 @@ class ClassroomController extends Controller
                 'classroom' => collect($classroom->toArray())->mapWithKeys(fn($value, $key) => ["classroom__{$key}" => $value]),
                 'students' => $classroom->students()->withTrashed()->get([
                     'name as student__name',
-                    'student_code as student__student_code'
-                ])
+                    'student_code as student__student_code',
+                    'cover_img'
+                ])->makeHidden('pivot') // hide pivot cause i don't use this in here
             ]
         ]);
     }
