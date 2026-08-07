@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Guardian;
+use App\Traits\PrefixKeys;
 use App\Traits\StripsPrefixes;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -101,7 +102,7 @@ class GuardianController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'data' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]), // add guardian__ prefix
+            'data' => PrefixKeys::prefixKeys($guardian->toArray(), "guardian__"), // add guardian__ prefix
         ], 200);
     }
 
@@ -228,7 +229,7 @@ class GuardianController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
-                'guardian' => collect($guardian->toArray())->mapWithKeys(fn($value, $key) => ["guardian__{$key}" => $value]),
+                'guardian' => PrefixKeys::prefixKeys($guardian->toArray(), "guardian__"),
                 'students' => $students
             ]
         ]);

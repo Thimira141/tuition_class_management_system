@@ -24,7 +24,7 @@ class Student extends Model
         'remarks',
         'guardian_id',
     ];
-    protected $appends = ['cover_img_url'];
+    protected $appends = ['student__cover_img_url'];
 
     /**
      * Each student belongs to one guardian.
@@ -52,11 +52,11 @@ class Student extends Model
     }
 
     /**
-     * This creates a virtual attribute: cover_img_url, for url
+     * This creates a virtual attribute: student__cover_img_url, for url
      * @return string
      * @author Thimira Dilshan <thimirad865@gmail.com>
      */
-    public function getCoverImgUrlAttribute() {
+    public function getStudentCoverImgUrlAttribute() {
         return $this->cover_img ? url(Storage::url($this->cover_img)) : asset('images/placeholder-image-member.svg');
     }
 

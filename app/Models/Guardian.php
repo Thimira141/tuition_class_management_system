@@ -21,7 +21,7 @@ class Guardian extends Model
         'address',
         'remarks',
     ];
-    protected $appends = ['cover_img_url'];
+    protected $appends = ['guardian__cover_img_url'];
 
     /**
      * A guardian can have many students.
@@ -49,11 +49,11 @@ class Guardian extends Model
     }
 
     /**
-     * This creates a virtual attribute: cover_img_url, for url
+     * This creates a virtual attribute: guardian__cover_img_url, for url
      * @return string
      * @author Thimira Dilshan <thimirad865@gmail.com>
      */
-    public function getCoverImgUrlAttribute() {
+    public function getGuardianCoverImgUrlAttribute() {
         return $this->cover_img ? url(Storage::url($this->cover_img)) : asset('images/placeholder-image-member.svg');
     }
 }

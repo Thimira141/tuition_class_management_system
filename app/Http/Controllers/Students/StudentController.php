@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Traits\PrefixKeys;
 use App\Traits\StripsPrefixes;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -104,7 +105,7 @@ class StudentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'data' => collect($student->toArray())->mapWithKeys(fn($value, $key) => ["student__{$key}" => $value]), //  add student__ prefix
+            'data' => PrefixKeys::prefixKeys($student->toArray(), "student__"), //  add student__ prefix
         ], 200);
 
     }
@@ -222,7 +223,7 @@ class StudentController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
-                'student' => collect($student->toArray())->mapWithKeys(fn($value, $key) => ["student__{$key}" => $value]),
+                'student' => PrefixKeys::prefixKeys($student->toArray(), "student__"),
                 'guardian' => $student->guardian()->withTrashed()->first([
                     'name as guardian__name',
                     'nic as guardian__nic',
