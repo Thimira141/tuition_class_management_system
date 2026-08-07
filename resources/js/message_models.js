@@ -52,3 +52,36 @@ export function showConfirmModal(message, onConfirm) {
     confirmModal.show();
 }
 
+/**
+ *
+ * @param {string} message
+ * @param {function} onConfirm
+ * @returns
+ */
+export function showConfirmToast(message, onConfirm) {
+    const backdrop = document.getElementById('confirm-toast-backdrop');
+    const toastMessage = document.getElementById('confirm-toast-message');
+    const confirmBtn = document.getElementById('confirm-toast-confirm');
+    const closeBtn = document.getElementById('confirm-toast-close');
+
+    if (!backdrop || !toastMessage || !confirmBtn || !closeBtn) {
+        console.error('Confirm toast elements not found');
+        return;
+    }
+
+    // set message
+    toastMessage.textContent = message;
+
+    // show backdrop
+    backdrop.classList.remove('d-none');
+
+    // bind events
+    confirmBtn.onclick = () => {
+        onConfirm();
+        backdrop.classList.add('d-none');
+    };
+
+    closeBtn.onclick = () => {
+        backdrop.classList.add('d-none');
+    };
+}

@@ -19,6 +19,7 @@
     <x-theme-toggle />
     <x-confirm-model />
     <x-feedback-model />
+    <x-confirm-toast />
 
     <script>
         const DEFAULT_ROUTES = {
