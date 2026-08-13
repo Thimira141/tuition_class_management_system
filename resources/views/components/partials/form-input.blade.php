@@ -11,7 +11,7 @@
 ])
 
 @php
-    $class = collect(['form-control'])->merge(explode(',', $classList))->when($errors->has($name), fn($c) => $c->push('is-invalid'))->implode(' ')
+    $class = collect([$type=='select'?'form-select':'form-control'])->merge(explode(',', $classList))->when($errors->has($name), fn($c) => $c->push('is-invalid'))->implode(' ')
 @endphp
 
 <div class="mb-3">
