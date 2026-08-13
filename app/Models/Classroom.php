@@ -21,6 +21,10 @@ class Classroom extends Model
         'name',
         'grade',
         'remarks',
+        'payment_method',
+        'price',
+        'start_date',
+        'end_date',
     ];
 
     /**

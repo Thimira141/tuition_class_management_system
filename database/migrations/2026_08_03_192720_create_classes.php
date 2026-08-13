@@ -17,6 +17,10 @@ return new class extends Migration {
             $table->string('name');
             $table->string('grade')->nullable();
             $table->string('remarks')->nullable();
+            $table->enum('payment_method', ['once', 'monthly'])->default('monthly');
+            $table->decimal('price', 10, 2);
+            $table->date('start_date');
+            $table->date('end_date');
             $table->softDeletes();
             $table->timestamps();
         });

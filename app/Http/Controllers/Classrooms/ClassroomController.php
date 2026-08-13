@@ -203,6 +203,26 @@ class ClassroomController extends Controller
                 'min:4',
                 'max:200',
             ],
+            'classroom__price' => [ // unit LKR
+                'required',
+                'numeric',
+                'min:0',
+                'max:99999.99',
+            ],
+            'classroom__payment_method' => [ // unit minutes
+                'required',
+                'string',
+                'in:once,monthly'
+            ],
+            'classroom__start_date' => [
+                'date',
+                'required',
+            ],
+            'classroom__end_date' => [
+                'date',
+                'required',
+                'after_or_equal:classroom__start_date'
+            ],
             //IMPORTANT strictly only for testcases, once tests are over please disable this validation
             // 'classroom__class_code' => 'sometimes|string|unique:classes,class_code',
         ]);
