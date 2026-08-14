@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Classrooms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Classroom;
+use App\Traits\PrefixKeys;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Traits\StripsPrefixes;
@@ -76,7 +77,7 @@ class ClassroomController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data Store Success!',
-            'data' => collect($classroom->toArray())->mapWithKeys(fn($value, $key) => ["classroom__{$key}" => $value]), // add classroom__ prefix
+            'data' => PrefixKeys::prefixKeys($classroom->toArray(), "classroom__"), // add classroom__ prefix
         ], 200);
     }
 
