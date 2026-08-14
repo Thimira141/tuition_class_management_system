@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-sm bg-body-tertiary shadow px-3 position-sticky top-0 z-1" style="backdrop-filter: blur(5px);">
+<nav class="navbar navbar-expand-sm bg-body-tertiary shadow px-3 position-sticky top-0 z-1"
+    style="backdrop-filter: blur(5px);">
     <div class="container">
         {{-- logo --}}
         <a class="navbar-brand" href="{{ route('admin-dashboard') }}">
@@ -26,7 +27,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn border" href="#announcements">
+                    <a class="nav-link btn border {{ request()->routeIs('admin-sessions') ? 'active' : null }}"
+                        href="{{ route('admin-sessions') }}">
                         <i class="bi bi-file-bar-graph me-1"></i>Attendance
                     </a>
                 </li>

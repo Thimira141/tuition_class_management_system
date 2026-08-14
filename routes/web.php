@@ -53,4 +53,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             });
         });
     });
+
+    Route::prefix('sessions')->group(function () {
+        Route::get('/', fn () => view('admin.sessions.index'))->name('admin-sessions');
+        Route::prefix('ajax')->group(function () {});
+    });
 });
