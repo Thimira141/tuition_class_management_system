@@ -24,7 +24,7 @@ trait PrefixKeys
                 return [$key => $value];
             }
 
-            return [$prefix . '__' . $key => $value];
+            return [(string) $prefix . $key => $value];
         });
     }
 }
