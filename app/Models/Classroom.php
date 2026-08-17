@@ -57,6 +57,16 @@ class Classroom extends Model
     }
 
     /**
+     * AttendanceSessions belonging to this classroom
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<AttendanceSession, Classroom>
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function attendanceSessions()
+    {
+        return $this->belongsTo(AttendanceSession::class, 'class_id');
+    }
+
+    /**
      * Use class_code instead of id for route model binding.
      * @return string
      * @author Thimira Dilshan <thimirad865@gmail.com>

@@ -70,6 +70,16 @@ class Student extends Model
     }
 
     /**
+     * StudentAttendance this student belongs to
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<StudentAttendance, Student>
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function attendance()
+    {
+        return $this->belongsTo(StudentAttendance::class, 'student_id');
+    }
+
+    /**
      * Use student_code instead of id for route model binding.
      * @return string
      * @author Thimira Dilshan <thimirad865@gmail.com>
