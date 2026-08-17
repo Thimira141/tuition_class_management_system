@@ -4,6 +4,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Classroom;
 use App\Models\User;
+use App\Traits\PrefixKeys;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -41,6 +42,10 @@ class ClassroomControllerTest extends TestCase
             'classroom__name' => 'Grade 10 A',
             'classroom__grade' => '10',
             'classroom__remarks' => 'Science stream',
+            'classroom__payment_method' => 'monthly',
+            'classroom__price' => '2000',
+            'classroom__start_date' => '2026-06-12',
+            'classroom__end_date' => '2026-12-31'
         ];
 
         $response = $this->postJson(route('classrooms.ajax.store'), $data);
@@ -60,14 +65,16 @@ class ClassroomControllerTest extends TestCase
 
         $classroom = Classroom::factory()->create();
 
-        $response = $this->putJson(route('classrooms.ajax.update', $classroom), [
-            'classroom__name' => 'Updated Name',
-            'classroom__grade' => (string) $classroom->grade
-        ]);
+        $data = $classroom->toArray();
+        $data['name'] = $name = "UPDATED-NAME";
+        unset($data['class_code']);
+        $data = PrefixKeys::prefixKeys($data, 'classroom__')->toArray();
 
+        $response = $this->putJson(route('classrooms.ajax.update', $classroom), $data);
+        // dd($data, $response->json(), $response->status());
         $response->assertStatus(200);
         $response->assertJsonFragment(['status' => 'success']);
-        $this->assertDatabaseHas('classes', ['id' => $classroom->id, 'name' => 'Updated Name']);
+        $this->assertDatabaseHas('classes', ['id' => $classroom->id, 'name' => $name]);
     }
 
 
