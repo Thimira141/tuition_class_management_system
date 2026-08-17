@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\AttendanceSession;
+use App\Models\Student;
+use App\Models\Classroom;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
-use App\Models\Classroom;
 use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,5 +33,11 @@ class AppServiceProvider extends ServiceProvider
             $classroom = new Classroom;
             return Classroom::withTrashed()->where($classroom->getRouteKeyName(), $value)->firstOrFail();
         });
+        // Bind student by student_code and include trashed
+        Route::bind('student', function ($value) {
+            $student = new Student;
+            return Student::withTrashed()->where($student->getRouteKeyName(), $value)->firstOrFail();
+        });
+        
     }
 }

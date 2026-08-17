@@ -68,4 +68,14 @@ class Student extends Model
     public function classrooms() {
         return $this->belongsToMany(Classroom::class, 'class_student', 'student_id', 'class_id');
     }
+
+    /**
+     * Use student_code instead of id for route model binding.
+     * @return string
+     * @author Thimira Dilshan <thimirad865@gmail.com>
+     */
+    public function getRouteKeyName()
+    {
+        return 'student_code';
+    }
 }
