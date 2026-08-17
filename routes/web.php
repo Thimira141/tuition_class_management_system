@@ -4,6 +4,7 @@ use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Guardians\GuardianController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Classrooms;
+use App\Http\Controllers\AttendanceSessions;
 
 require __DIR__.'/auth.php';
 
@@ -56,6 +57,18 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::prefix('sessions')->group(function () {
         Route::get('/', fn () => view('admin.sessions.index'))->name('admin-sessions');
-        Route::prefix('ajax')->group(function () {});
+        Route::prefix('ajax')->group(function () {
+            Route::get('/dt-index', [AttendanceSessions\AttendanceSessionsController::class, 'index'])->name('attendance_sessions.ajax.dt.index');
+            Route::get('/show/{attendance_session}', [AttendanceSessions\AttendanceSessionsController::class, 'show'])->name('attendance_sessions.ajax.show');
+            Route::post('/store', [AttendanceSessions\AttendanceSessionsController::class, 'store'])->name('attendance_sessions.ajax.store');
+            Route::put('/update/{attendance_session}', [AttendanceSessions\AttendanceSessionsController::class, 'update'])->name('attendance_sessions.ajax.update');
+            Route::delete('/destroy/{attendance_session}', [AttendanceSessions\AttendanceSessionsController::class, 'destroy'])->name('attendance_sessions.ajax.destroy');
+
+            Route::prefix('{attendance_session}/attendance/{student}')->group(function () {
+                Route::get('/show', [AttendanceSessions\StudentsAttendanceController::class, 'show'])->name('attendance.student.show');
+                Route::post('/mark', [AttendanceSessions\StudentsAttendanceController::class, 'markStudentAttendance'])->name('attendance.student.mark');
+                Route::post('/unmark', [AttendanceSessions\StudentsAttendanceController::class, 'unmarkStudentAttendance'])->name('attendance.student.unmark');
+            });
+        });
     });
 });

@@ -38,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
             $student = new Student;
             return Student::withTrashed()->where($student->getRouteKeyName(), $value)->firstOrFail();
         });
-        
+        // Bind attendance_session by attendance_session_code and include trashed
+        Route::bind('attendance_session', function ($value) {
+            $attendance_session = new AttendanceSession;
+            return AttendanceSession::withTrashed()->where($attendance_session->getRouteKeyName(), $value)->firstOrFail();
+        });
     }
 }
